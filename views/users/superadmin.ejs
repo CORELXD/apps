@@ -1,11 +1,17 @@
-<div class="container">
-    <div class="row">
-      <div class="col">
-        <h1>Hello : <%= email %></h1>
-  
-        <a href="/kategori/superadmin">kategori</a>
-        <a href="/logout">logout</a>
-      </div>
+<%- include('../partials/_head.ejs') %>
+<body>
+  <%- include('../partials/_navbar.ejs') %>
+  <div class="content">
+    <div class="container">
+         <!-- Page Heading -->
+         <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Selamat Datang</h1>
+        </div>
+        <div class="row">
+            <div class="col">
+                <h1>Hello : <%= email %></h1>
+            </div>
+        </div>
     </div>
-  </div>
-    
+</div>
+  <%- include('../partials/_foot.ejs') %>

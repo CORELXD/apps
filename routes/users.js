@@ -8,15 +8,16 @@ router.get("/", async function (req, res, next) {
     let id = req.session.userId;
     let data = await Model_Users.getId(id);
     if (data.length > 0) {
-      if (data[0].level_users != 'users') {
+      if (data[0].level_users !== 'users') {
         res.redirect("/logout");
       } else {
+        // Make sure `role` is passed to the EJS template
         res.render("users/index", {
           title: "Users Home",
           email: data[0].email,
+          role: req.session.userRole // Pass the role to the EJS template
         });
       }
-      // Akhir kondisi
     } else {
       res.status(401).json({ error: "user tidak ada" });
     }
@@ -24,5 +25,6 @@ router.get("/", async function (req, res, next) {
     res.status(501).json("Butuh akses login");
   }
 });
+
 
 module.exports = router;

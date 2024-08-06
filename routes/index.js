@@ -38,14 +38,14 @@ router.post("/log", async (req, res) => {
       let cek = await bcrypt.compare(password, enkripsi);
       if (cek) {
         req.session.userId = Data[0].id_users;
-        if (Data[0].level_users === 'superadmin') {
-          req.flash("success", "Berhasil login");
+        req.session.userRole = Data[0].level_users; // Store role in session
+        req.session.userEmail = Data[0].email; // Store email in session
+        const role = Data[0].level_users;
+        if (role === 'superadmin') {
           res.redirect("/superadmin");
-        } else if (Data[0].level_users === 'admin') {
-          req.flash("success", "Berhasil login");
+        } else if (role === 'admin') {
           res.redirect("/admin");
-        } else if (Data[0].level_users === 'users') {
-          req.flash("success", "Berhasil login");
+        } else if (role === 'users') {
           res.redirect("/users");
         } else {
           req.flash("error", "Role pengguna tidak dikenal");
@@ -64,7 +64,6 @@ router.post("/log", async (req, res) => {
     res.redirect("/login4");
   }
 });
-
 
 
 router.get("/logout", function (req, res) {

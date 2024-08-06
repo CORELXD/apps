@@ -15,6 +15,7 @@ router.get("/", async function (req, res, next) {
         res.render("users/superadmin", {
           title: "Super Admin Home",
           email: data[0].email,
+          role: req.session.userRole // Pass the role to the EJS template
         });
       }
     } else {

@@ -10,6 +10,7 @@ const MemoryStore = require("session-memory-store")(session);
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const adminRouter = require("./routes/admin");
+const superadminRouter = require("./routes/superadmin");
 const kategoriRouter = require("./routes/kategori");
 
 const app = express();
@@ -44,6 +45,7 @@ app.use(flash());
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/admin", adminRouter);
+app.use("/superadmin", superadminRouter);
 app.use("/kategori", kategoriRouter);
 
 // catch 404 and forward to error handler
