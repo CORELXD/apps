@@ -1,2 +1,2 @@
-##Run Code Nya
+##Run Code
 Menggunakan nodemon npm start
