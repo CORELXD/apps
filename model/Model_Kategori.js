@@ -6,6 +6,7 @@ class Model_Kategori {
         return new Promise((resolve, reject) => {
             connection.query('SELECT * FROM produk ORDER BY id_kategori DESC', (err, rows) => {
                 if (err) {
+                    console.error('Database query error in getAll:', err); // Tambahkan logging
                     reject(err);
                 } else {
                     resolve(rows);
@@ -19,8 +20,10 @@ class Model_Kategori {
         return new Promise((resolve, reject) => {
             connection.query('INSERT INTO produk SET ?', Data, (err, result) => {
                 if (err) {
+                    console.error('Database query error in store:', err); // Tambahkan logging
                     reject(err);
                 } else {
+                    console.log('Data inserted successfully:', result); // Tambahkan logging
                     resolve(result);
                 }
             });
@@ -32,6 +35,7 @@ class Model_Kategori {
         return new Promise((resolve, reject) => {
             connection.query('SELECT * FROM produk WHERE id_kategori = ?', [id], (err, rows) => {
                 if (err) {
+                    console.error('Database query error in getId:', err); // Tambahkan logging
                     reject(err);
                 } else {
                     resolve(rows);
@@ -41,12 +45,13 @@ class Model_Kategori {
     }
 
     // Mengupdate status
-static async updateStatus(data) {
+    static async updateStatus(data) {
         return new Promise((resolve, reject) => {
             const { id, Data } = data;
             const sql = 'UPDATE produk SET level_acc = ? WHERE id_kategori = ?';
             connection.query(sql, [Data, id], (err, result) => {
                 if (err) {
+                    console.error('Database query error in updateStatus:', err); // Tambahkan logging
                     reject(err);
                 } else {
                     resolve(result);
@@ -55,12 +60,12 @@ static async updateStatus(data) {
         });
     }
 
-
     // Mengupdate data
     static async update(id, Data) {
         return new Promise((resolve, reject) => {
             connection.query('UPDATE produk SET ? WHERE id_kategori = ?', [Data, id], (err, result) => {
                 if (err) {
+                    console.error('Database query error in update:', err); // Tambahkan logging
                     reject(err);
                 } else {
                     resolve(result);
@@ -74,6 +79,7 @@ static async updateStatus(data) {
         return new Promise((resolve, reject) => {
             connection.query('DELETE FROM produk WHERE id_kategori = ?', [id], (err, result) => {
                 if (err) {
+                    console.error('Database query error in delete:', err); // Tambahkanx logging
                     reject(err);
                 } else {
                     resolve(result);

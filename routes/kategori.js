@@ -4,6 +4,24 @@ var router = express.Router();
 // var connection = require('../config/database.js');
 const Model_Kategori = require('../model/Model_Kategori');
 const Model_Users = require('../model/Model_Users');
+const fs = require('fs');
+const multer = require('multer');
+const path = require('path');
+const xlsx = require('xlsx');
+// const pdfParse = require('pdf-parse');
+// const mammoth = require('mammoth');
+const axios = require('axios'); 
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'public/documents');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + path.extname(file.originalname));
+    }
+});
+
+const upload = multer({ storage: storage });
 
 // Menampilkan Data Pada Page Users
 router.get('/users', async function(req, res, next) {
@@ -55,21 +73,41 @@ router.get('/superadmin/create', function(req, res, next) {
 });
 
 
-//Menambahkan Data Dengan Role Superadmin
-router.post('/store', async function(req,res,next){
-    try{
-        let {nama_kategori} = req.body;
-        let Data = {
-            nama_kategori
+// Menambahkan data dengan file unggahan (hanya Excel)
+router.post('/store', upload.single('import_file'), async function(req, res, next) {
+    let filePath = null;
+    try {
+        filePath = req.file ? req.file.path : null;
+        const ext = filePath ? path.extname(req.file.originalname).toLowerCase() : '';
+
+        if (filePath && (ext === '.xlsx' || ext === '.xls')) {
+            const workbook = xlsx.readFile(filePath);
+            const sheet_name_list = workbook.SheetNames;
+            sheet_name_list.forEach(function(sheet) {
+                const jsonData = xlsx.utils.sheet_to_json(workbook.Sheets[sheet]);
+                jsonData.forEach(async (row) => {
+                    if (row.nama_kategori) {
+                        await Model_Kategori.store({ nama_kategori: row.nama_kategori });
+                    }
+                });
+            });
+        } else {
+            throw new Error('File yang diunggah bukan file Excel.');
         }
-        await Model_Kategori.store(Data);
+
         req.flash('success', 'Berhasil Menyimpan Data!');
         res.redirect('/kategori/superadmin');
-    }catch{
-        req.flash('error', 'Terjadi kesalahan pada penyimpanan data')
-        req.redirect('/kategori/superadmin/home');
+    } catch (error) {
+        console.error(error);
+        req.flash('error', 'Terjadi kesalahan pada penyimpanan data');
+        res.redirect('/kategori/superadmin/create');
+    } finally {
+        if (filePath && fs.existsSync(filePath)) {
+            fs.unlinkSync(filePath); // Hapus file setelah digunakan
+        }
     }
-})
+});
+
 
 //mengedit data by id dengan Role superadmin 
 router.get('/superadmin/edit/(:id)', async function(req, res, next) {
