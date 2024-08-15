@@ -17,9 +17,10 @@ router.get("/login", function (req, res, next) {
 });
 
 router.post("/saveusers", async (req, res) => {
-  let { email, password, level_users } = req.body;
+  let { username,email, password, level_users } = req.body;
   let enkripsi = await bcrypt.hash(password, 10);
   let Data = {
+    username,
     email,
     password: enkripsi,
     level_users: 'users',
