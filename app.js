@@ -42,6 +42,12 @@ app.use(
 
 app.use(flash());
 
+// Middleware to make session data available to all views
+app.use((req, res, next) => {
+  res.locals.user = req.session.user || null;
+  next();
+});
+
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/admin", adminRouter);

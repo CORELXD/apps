@@ -5,7 +5,7 @@ class Model_Rekon {
   static async getAll() {
     return new Promise((resolve, reject) => {
       connection.query(
-        "SELECT * FROM rekon ORDER BY id_rekon DESC",
+        "SELECT * FROM rekon ORDER BY id_rekon ASC",
         (err, rows) => {
           if (err) {
             console.error("Database query error in getAll:", err); // Tambahkan logging

@@ -1,7 +1,7 @@
 const connection = require("../config/database");
 
 class Model_Users {
-  static async getA11() {
+  static async getAll() {
     return new Promise((resolve, reject) => {
       connection.query(
         "SELECT * FROM users ORDER BY id_users DESC",
