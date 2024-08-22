@@ -31,7 +31,6 @@
                 <th scope="col">Approved Not PPQ</th>
                 <th scope="col">REP REC</th>
                 <th scope="col">Change To</th>
-                <th scope="col">Status</th>
                 <th colspan="2" scope="col">Aksi</th>
               </tr>
             </thead>
@@ -55,21 +54,20 @@
                   <td><%= data[i].approved_not_ppq %></td>
                   <td><%= data[i].rep_rec %></td>
                   <td><%= data[i].change_to %></td>
-                  <td><%= data[i].level_acc %></td>
                   <td>
-                    <% if (data[i].level_acc === 'approve') { %>
-                      <button class="btn btn-sm btn-secondary" disabled>Approved</button>
-                    <% } else { %>
+                    <% if (data[i].level_acc === 'kosong' || !data[i].level_acc) { %>
                       <button onclick="updateLevelAcc('<%= data[i].id_rekon %>', 'approve')" class="btn btn-sm btn-success"><i class="fas fa-check"></i> Approve</button>
+                    <% } else if (data[i].level_acc === 'approve') { %>
+                      <button class="btn btn-sm btn-success" disabled>Approved</button>
                     <% } %>
                   </td>
                   <td>
-                    <% if (data[i].level_acc === 'reject') { %>
-                      <button class="btn btn-sm btn-secondary" disabled>Rejected</button>
-                    <% } else { %>
+                    <% if (data[i].level_acc === 'kosong' || !data[i].level_acc) { %>
                       <button onclick="updateLevelAcc('<%= data[i].id_rekon %>', 'reject')" class="btn btn-sm btn-danger"><i class="fas fa-times"></i> Reject</button>
+                    <% } else if (data[i].level_acc === 'reject') { %>
+                      <button class="btn btn-sm btn-danger" disabled>Rejected</button>
                     <% } %>
-                  </td>
+                  </td>                                                     
                 </tr>
               <% } %>
             </tbody>
@@ -82,53 +80,30 @@
 
   <script>
     async function updateLevelAcc(id, levelAcc) {
-        try {
-            const response = await fetch(`/rekon/admin/detail/${id}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ level_acc: levelAcc })
-            });
-    
-            const result = await response.json();
-            if (response.ok) {
-                alert(result.message);
-    
-                // Mendapatkan elemen tombol berdasarkan id_rekon
-                const buttonApprove = document.querySelector(`button[onclick="updateLevelAcc('${id}', 'approve')"]`);
-                const buttonReject = document.querySelector(`button[onclick="updateLevelAcc('${id}', 'reject')"]`);
-    
-                // Memperbarui tombol berdasarkan levelAcc
-                if (levelAcc === 'approve') {
-                    if (buttonApprove) {
-                        buttonApprove.classList.remove('btn-success');
-                        buttonApprove.classList.add('btn-secondary');
-                        buttonApprove.textContent = 'Approved';
-                        buttonApprove.disabled = true;
-                    }
-                    if (buttonReject) {
-                        buttonReject.classList.add('d-none'); // Menyembunyikan tombol reject
-                    }
-                } else if (levelAcc === 'reject') {
-                    if (buttonReject) {
-                        buttonReject.classList.remove('btn-danger');
-                        buttonReject.classList.add('btn-secondary');
-                        buttonReject.textContent = 'Rejected';
-                        buttonReject.disabled = true;
-                    }
-                    if (buttonApprove) {
-                        buttonApprove.classList.add('d-none'); // Menyembunyikan tombol approve
-                    }
-                }
-            } else {
-                alert(result.error);
-            }
-        } catch (err) {
-            console.error("Error updating level_acc:", err);
-            alert("Failed to update level_acc. Please try again.");
+    try {
+        const response = await fetch(`/rekon/admin/detail/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ level_acc: levelAcc })
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            alert(result.message);
+
+            // Menggunakan `window.location.reload()` untuk memuat ulang halaman dan menampilkan data terbaru
+            window.location.reload(); // Ini untuk memastikan kondisi yang terbaru muncul setelah update
+        } else {
+            alert(result.error);
         }
+    } catch (err) {
+        console.error("Error updating level_acc:", err);
+        alert("Failed to update level_acc. Please try again.");
     }
+}
+
     </script>
     
   <!-- Inline CSS -->

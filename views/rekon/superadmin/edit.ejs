@@ -1,77 +1,76 @@
 <%- include('../../partials/_head.ejs') %>
 <body>
   <%- include('../../partials/_navbar.ejs') %>
-  <form action="/rekon/update/<%= id_rekon %>" method="POST">
       <div class="container my-4">
         <form action="/rekon/update/<%= id_rekon %>" method="POST">
           <table class="table table-bordered">
             <tbody>
               <tr>
                 <td><label for="incident" class="form-label">Incident</label></td>
-                <td><input type="text" id="incident" class="form-control" name="incident" value="<%= incident %>" required></td>
+                <td><input type="text" id="incident" class="form-control" name="incident" value="<%= incident %>"></td>
               </tr>
               <tr>
                 <td><label for="customer" class="form-label">Customer</label></td>
-                <td><input type="text" id="customer" class="form-control" name="customer" value="<%= customer %>" required></td>
+                <td><input type="text" id="customer" class="form-control" name="customer" value="<%= customer %>"></td>
               </tr>
               <tr>
                 <td><label for="layanan" class="form-label">Layanan</label></td>
-                <td><input type="text" id="layanan" class="form-control" name="layanan" value="<%= layanan %>" required></td>
+                <td><input type="text" id="layanan" class="form-control" name="layanan" value="<%= layanan %>"></td>
               </tr>
               <tr>
                 <td><label for="kategori" class="form-label">Kategori</label></td>
-                <td><input type="text" id="kategori" class="form-control" name="kategori" value="<%= kategori %>" required></td>
+                <td><input type="text" id="kategori" class="form-control" name="kategori" value="<%= kategori %>"></td>
               </tr>
               <tr>
                 <td><label for="regional" class="form-label">Regional</label></td>
-                <td><input type="text" id="regional" class="form-control" name="regional" value="<%= regional %>" required></td>
+                <td><input type="text" id="regional" class="form-control" name="regional" value="<%= regional %>"></td>
               </tr>
               <tr>
                 <td><label for="witel" class="form-label">Witel</label></td>
-                <td><input type="text" id="witel" class="form-control" name="witel" value="<%= witel %>" required></td>
+                <td><input type="text" id="witel" class="form-control" name="witel" value="<%= witel %>"></td>
               </tr>
               <tr>
                 <td><label for="jenis_permintaan" class="form-label">Jenis Permintaan</label></td>
-                <td><input type="text" id="jenis_permintaan" class="form-control" name="jenis_permintaan" value="<%= jenis_permintaan %>" required></td>
+                <td><input type="text" id="jenis_permintaan" class="form-control" name="jenis_permintaan" value="<%= jenis_permintaan %>"></td>
               </tr>
               <tr>
                 <td><label for="reason" class="form-label">Reason</label></td>
-                <td><input type="text" id="reason" class="form-control" name="reason" value="<%= reason %>" required></td>
+                <td><input type="text" id="reason" class="form-control" name="reason" value="<%= reason %>"></td>
               </tr>
               <tr>
                 <td><label for="ttr_e2e_awal" class="form-label">TTR E2E Awal</label></td>
-                <td><input type="text" id="ttr_e2e_awal" class="form-control" name="ttr_e2e_awal" value="<%= ttr_e2e_awal %>" required></td>
+                <td><input type="text" id="ttr_e2e_awal" class="form-control" name="ttr_e2e_awal" value="<%= ttr_e2e_awal %>"></td>
               </tr>
               <tr>
                 <td><label for="ttr_after_reduksi" class="form-label">TTR After Reduksi</label></td>
-                <td><input type="text" id="ttr_after_reduksi" class="form-control" name="ttr_after_reduksi" value="<%= ttr_after_reduksi %>" required></td>
+                <td><input type="text" id="ttr_after_reduksi" class="form-control" name="ttr_after_reduksi" value="<%= ttr_after_reduksi %>"></td>
               </tr>
               <tr>
                 <td><label for="eviden_regional" class="form-label">Eviden Regional</label></td>
-                <td><input type="text" id="eviden_regional" class="form-control" name="eviden_regional" value="<%= eviden_regional %>" required></td>
+                <td><input type="text" id="eviden_regional" class="form-control" name="eviden_regional" value="<%= eviden_regional %>"></td>
               </tr>
               <tr>
                 <td><label for="catatan_sda" class="form-label">Catatan SDA</label></td>
-                <td><textarea id="catatan_sda" class="form-control" name="catatan_sda" rows="3" required><%= catatan_sda %></textarea></td>
+                <td><textarea id="catatan_sda" class="form-control" name="catatan_sda" rows="3"><%= catatan_sda %></textarea></td>
               </tr>
               <tr>
                 <td><label for="validasi_sda" class="form-label">Validasi SDA</label></td>
-                <td><textarea id="validasi_sda" class="form-control" name="validasi_sda" rows="3" required><%= validasi_sda %></textarea></td>
+                <td><textarea id="validasi_sda" class="form-control" name="validasi_sda" rows="3"><%= validasi_sda %></textarea></td>
               </tr>
               <tr>
                 <td><label for="approved_not_ppq" class="form-label">Approved Not PPQ</label></td>
-                <td><input type="text" id="approved_not_ppq" class="form-control" name="approved_not_ppq" value="<%= approved_not_ppq %>" required></td>
+                <td><input type="text" id="approved_not_ppq" class="form-control" name="approved_not_ppq" value="<%= approved_not_ppq %>"></td>
               </tr>
               <tr>
                 <td><label for="rep_rec" class="form-label">Rep/Rec</label></td>
-                <td><input type="text" id="rep_rec" class="form-control" name="rep_rec" value="<%= rep_rec %>" required></td>
+                <td><input type="text" id="rep_rec" class="form-control" name="rep_rec" value="<%= rep_rec %>"></td>
               </tr>
               <tr>
                 <td><label for="change_to" class="form-label">Change To</label></td>
-                <td><input type="text" id="change_to" class="form-control" name="change_to" value="<%= change_to %>" required></td>
+                <td><input type="text" id="change_to" class="form-control" name="change_to" value="<%= change_to %>"></td>
               </tr>
               <tr>
-                  <button id="submit" class="btn btn-sm btn-success">Edit</button>
+                  <button id="submit" class="btn btn-sm btn-success mb-3">Simpan</button>
               </tr>
             </tbody>
           </table>

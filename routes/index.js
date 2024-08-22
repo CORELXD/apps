@@ -50,19 +50,19 @@ router.post("/log", async (req, res) => {
           res.redirect("/users");
         } else {
           req.flash("error", "Role pengguna tidak dikenal");
-          res.redirect("/login1");
+          res.status(404).render('rekon/404');
         }
       } else {
         req.flash("error", "Email atau password salah");
-        res.redirect("/login2");
+        res.status(404).render('rekon/404');
       }
     } else {
       req.flash("error", "Akun tidak ditemukan");
-      res.redirect("/login3");
+      res.status(404).render('rekon/404');
     }
   } catch (err) {
     req.flash("error", "Error pada fungsi");
-    res.redirect("/login4");
+    res.status(404).render('rekon/404');
   }
 });
 

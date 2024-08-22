@@ -1,14 +1,16 @@
 <%- include('../../partials/_head.ejs') %>
 <body>
   <%- include('../../partials/_navbar.ejs') %>
-  <br>
   <div class="container">
     <% if (messages.success) { %>
       <div class="alert alert-info" role="alert">
         <%- messages.success %>
       </div>
     <% } %>
-    <a href="/rekon/superadmin/create" class="btn btn-sm btn-success mb-3"><i class="fas fa-plus"></i> Tambah</a>
+    <h1>Data Rekon</h1>
+    <div class="text-end">
+      <a href="/rekon/superadmin/create" class="btn btn-sm btn-success mb-3"><i class="fas fa-plus"></i> Tambah</a>
+  </div>
     <div class="row">
       <div class="col">
         <div class="table-container">
@@ -74,7 +76,7 @@
   <!-- Inline CSS -->
   <style>
     .table-container {
-      max-height: 400px;
+      max-height: 350px;
       overflow: auto; /* Allows scrolling but hides scrollbar */
     }
 
