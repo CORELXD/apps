@@ -46,6 +46,8 @@ router.post("/log", async (req, res) => {
           res.redirect("/superadmin");
         } else if (role === 'admin') {
           res.redirect("/admin");
+        } else if (role === 'superusers') {
+          res.redirect("/superusers");
         } else if (role === 'users') {
           res.redirect("/users");
         } else {

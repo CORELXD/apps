@@ -1,0 +1,146 @@
+ 
+ /* Tampilan Seluruh role pada Bagian Tabel */
+ .table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 300%; /* Menyesuaikan lebar tabel ke 100% dari container */
+  }
+
+  .table th {
+    overflow: hidden; /* Menghindari teks meluber keluar kolom */
+    text-overflow: ellipsis; /* Menambahkan "..." jika teks terlalu panjang */
+    white-space: nowrap; /* Mencegah pembungkusan teks */
+  }
+  .table-container {
+    max-height: 400px;
+    overflow-y: auto;
+  }
+  
+  .table-container::-webkit-scrollbar {
+      display: none; /* Hides scrollbar for WebKit browsers (Chrome, Safari) */
+    }
+
+  .sticky-header th {
+    position: -webkit-sticky; /* For Safari */
+    position: sticky;
+    top: 0;
+    text-align: center;
+    z-index: 10; /* Ensures the header is above other content */
+  }
+
+  .sticky-footer {
+    position: -webkit-sticky;
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    z-index: 1000;
+    border-top: 1px solid #ccc;
+  }
+  
+
+/* Tampilan  untuk Bagian thead Untuk Seluruh Role */
+  .th-no {
+    background-color: red !important; /* Mengubah latar belakang menjadi merah */
+    color: white !important; /* Mengubah teks menjadi putih */
+    width: 50px;
+  }
+
+  .th-rep-rec {
+    background-color: #ffff00 !important; /* Warna kuning */
+    width: 150px;
+  }
+
+  .th-change-to {
+    background-color: #ffff00 !important; /* Warna kuning */
+    width: 150px;
+  }
+  .th-catatan-sda {
+    background-color: wheat !important; /* Warna cream */
+  }
+
+  .th-validasi-sda {
+      width: 170px;
+    background-color: wheat !important; /* Warna cream */
+  }
+
+  .th-approved-not-ppq {
+      width: 220px;
+    background-color: wheat !important; /* Warna cream */
+  }
+
+  .th-incident {
+    background-color: red !important;/* Mengubah latar belakang menjadi merah */
+    color: white !important; /* Mengubah teks menjadi putih */
+    width: 100px;
+  }
+
+  .th-customer {
+    background-color: red !important;/* Mengubah latar belakang menjadi merah */
+    color: white !important; /* Mengubah teks menjadi putih */
+    width: 100px;
+  }
+
+  .th-layanan {
+    background-color: red !important;/* Mengubah latar belakang menjadi merah */
+    color: white !important; /* Mengubah teks menjadi putih */
+    width: 100px;
+  }
+
+  .th-kategori {
+    background-color: red !important;/* Mengubah latar belakang menjadi merah */
+    color: white !important; /* Mengubah teks menjadi putih */
+    width: 300px;
+  }
+
+  .th-regional {
+    background-color: red !important;/* Mengubah latar belakang menjadi merah */
+    color: white !important; /* Mengubah teks menjadi putih */
+      width: 100px;
+  }
+
+  .th-witel {
+    background-color: red !important;/* Mengubah latar belakang menjadi merah */
+    color: white !important; /* Mengubah teks menjadi putih */
+      width: 100px;
+  }
+
+  .th-jenis-permintaan {
+    color: #343a40;
+      background-color: #12aa12 !important; /* Warna mint */
+    background-color: #ccccff; /* Warna lavender */
+  }
+
+  .th-reason {
+    color: #343a40;
+      background-color: #12aa12 !important; /* Warna mint */
+    width: 200px;
+  }
+
+  .th-ttr-e2e-awal {
+    color: #343a40;
+    background-color: #12aa12 !important; /* Warna mint */
+  }
+
+  .th-ttr-after-reduksi {
+    color: #343a40;
+      background-color: #12aa12 !important; /* Warna mint */
+  }
+
+  .th-eviden-regional {
+    color: #343a40;
+    width: 150px;
+    background-color: #12aa12 !important; /* Warna mint */
+  }
+  .th-status,
+  .th-aksi  {
+    background-color: #343a40 !important;
+    color: white !important;
+    width: 100px; /* Warna abu-abu lembut */
+  }
+
+/* button Pada Bagian role admin */
+  .btn-approve, .btn-reject {
+    width: 100px; /* Lebar tombol seragam */
+  }

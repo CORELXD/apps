@@ -1,0 +1,58 @@
+/* Container untuk form agar scrollable */
+.scrollable-form-container {
+    max-height: 400px; /* Atur sesuai kebutuhan */
+    overflow-y: auto;
+    margin: 0 auto;
+  }
+  
+  /* Kelas untuk memastikan form berada di dalam container yang dapat discroll */
+  .scrollable-form {
+    padding: 15px; /* Padding di dalam form untuk jarak */
+    background-color: #f8f9fa; /* Warna latar belakang form */
+  }
+  
+  /* Styling label agar terlihat konsisten */
+  .form-label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 0.5rem; /* Jarak antara label dan input */
+  }
+  
+  /* Styling input dan textarea untuk form */
+  .form-control {
+    margin-bottom: 1rem; /* Jarak antara input dan textarea */
+  }
+  
+  /* Styling tombol simpan */
+  .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: white;
+    font-weight: bold;
+  }
+  
+  /* Kelas untuk footer yang sticky */
+  .sticky-footer {
+    position: sticky;
+    bottom: 0;
+    background-color: white;
+    padding: 10px;
+    text-align: center;
+    z-index: 1000;
+    border-top: 1px solid #ccc;
+  }
+  
+  /* Mengatur scrollbar untuk WebKit browsers (Chrome, Safari) */
+  .scrollable-form-container::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  .scrollable-form-container::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  
+  .scrollable-form-container::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+  

@@ -9,6 +9,7 @@ const MemoryStore = require("session-memory-store")(session);
 
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const superusersRouter = require("./routes/superusers");
 const adminRouter = require("./routes/admin");
 const superadminRouter = require("./routes/superadmin");
 const rekonRouter = require("./routes/rekon");
@@ -52,6 +53,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/admin", adminRouter);
 app.use("/superadmin", superadminRouter);
+app.use("/superusers", superusersRouter);
 app.use("/rekon", rekonRouter);
 
 // catch 404 and forward to error handler

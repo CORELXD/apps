@@ -12,26 +12,32 @@
       <div class="col">
         <div class="table-container">
           <table class="table table-striped table-hover">
-            <thead class="thead-dark sticky-header">
+            <thead class="sticky-header">
               <tr>
-                <th scope="col">No</th>
-                <th scope="col">Incident</th>
-                <th scope="col">Customer</th>
-                <th scope="col">Layanan</th>
-                <th scope="col">Kategori</th>
-                <th scope="col">Regional</th>
-                <th scope="col">Witel</th>
-                <th scope="col">Jenis Permintaan</th>
-                <th scope="col">Reason</th>
-                <th scope="col">TTR E2E Awal</th>
-                <th scope="col">TTR After Reduksi</th>
-                <th scope="col">Eviden Regional</th>
-                <th scope="col">Catatan SDA</th>
-                <th scope="col">Validasi SDA</th>
-                <th scope="col">Approved Not PPQ</th>
-                <th scope="col">REP REC</th>
-                <th scope="col">Change To</th>
-                <th colspan="2" scope="col">Aksi</th>
+                <th scope="col" class="th-no">No</th>
+                <th scope="col" class="th-incident">Incident</th>
+                <th scope="col" class="th-customer">Customer</th>
+                <th scope="col" class="th-layanan">Layanan</th>
+                <th scope="col" class="th-kategori">Kategori</th>
+                <th scope="col" class="th-regional">Regional</th>
+                <th scope="col" class="th-witel">Witel</th>
+                <th scope="col" class="th-jenis-permintaan">
+                  Jenis Permintaan
+                </th>
+                <th scope="col" class="th-reason">Reason</th>
+                <th scope="col" class="th-ttr-e2e-awal">TTR E2E Awal</th>
+                <th scope="col" class="th-ttr-after-reduksi">
+                  TTR After Reduksi
+                </th>
+                <th scope="col" class="th-eviden-regional">Eviden Regional</th>
+                <th scope="col" class="th-catatan-sda">Catatan SDA</th>
+                <th scope="col" class="th-validasi-sda">Validasi SDA</th>
+                <th scope="col" class="th-approved-not-ppq">
+                  Approved Not PPQ
+                </th>
+                <th scope="col" class="th-rep-rec">Rep/Rec</th>
+                <th scope="col" class="th-change-to">Change To</th>
+                <th colspan="2" scope="col" class="th-aksi">Aksi</th>
               </tr>
             </thead>
             <tbody>
@@ -56,16 +62,16 @@
                   <td><%= data[i].change_to %></td>
                   <td>
                     <% if (data[i].level_acc === 'kosong' || !data[i].level_acc) { %>
-                      <button onclick="updateLevelAcc('<%= data[i].id_rekon %>', 'approve')" class="btn btn-sm btn-success"><i class="fas fa-check"></i> Approve</button>
+                      <button onclick="updateLevelAcc('<%= data[i].id_rekon %>', 'approve')" class="btn btn-sm btn-success"><i class="fas fa-check"></i></button>
                     <% } else if (data[i].level_acc === 'approve') { %>
-                      <button class="btn btn-sm btn-success" disabled>Approved</button>
+                      <button class="btn btn-sm btn-success" disabled><i class="fas fa-check"></i></button>
                     <% } %>
                   </td>
                   <td>
                     <% if (data[i].level_acc === 'kosong' || !data[i].level_acc) { %>
-                      <button onclick="updateLevelAcc('<%= data[i].id_rekon %>', 'reject')" class="btn btn-sm btn-danger"><i class="fas fa-times"></i> Reject</button>
+                      <button onclick="updateLevelAcc('<%= data[i].id_rekon %>', 'reject')" class="btn btn-sm btn-danger"><i class="fas fa-times"></i> </button>
                     <% } else if (data[i].level_acc === 'reject') { %>
-                      <button class="btn btn-sm btn-danger" disabled>Rejected</button>
+                      <button class="btn btn-sm btn-danger" disabled><i class="fas fa-times"></i></button>
                     <% } %>
                   </td>                                                     
                 </tr>
@@ -105,25 +111,4 @@
 }
 
     </script>
-    
-  <!-- Inline CSS -->
-  <style>
-    .table-container {
-      max-height: 600px;
-      overflow: auto; /* Allows scrolling but hides scrollbar */
-    }
-
-    .table-container::-webkit-scrollbar {
-      display: none; /* Hides scrollbar for WebKit browsers (Chrome, Safari) */
-    }
-
-    .sticky-header th {
-      position: -webkit-sticky; /* For Safari */
-      position: sticky;
-      top: 0;
-      background-color: #343a40; /* Same color as thead-dark */
-      color: white;
-      z-index: 10; /* Ensures the header is above other content */
-    }
-  </style>
 </body>

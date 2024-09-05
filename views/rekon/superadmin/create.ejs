@@ -5,8 +5,9 @@
         <div class="mb-3">
             <label for="import_file" class="form-label">Impor dari File</label>
             <div id="drop-area" class="drop-area">
-                <p>Drag and drop a file here or click to select a file</p>
-                <input type="file" id="import_file" class="form-control" name="import_file" accept=".xlsx, .xls" style="display: none;">
+                <p id="drop-area-text">Drag and drop a file here or click to select a file</p>
+                <input type="file" id="import_file" class="form-control" name="import_file" accept=".xlsx, .xls, .png, .jpg" style="display: none;">
+                <!-- <span class="file-icon">📁</span> -->
             </div>
         </div>
 
@@ -18,11 +19,11 @@
     <%- include('../../partials/_foot.ejs') %>
 
     <script>
-        // JavaScript untuk mengelola interaksi drag and drop
         const dropArea = document.getElementById('drop-area');
         const fileInput = document.getElementById('import_file');
+        const dropAreaText = document.getElementById('drop-area-text');
 
-        const validFileExtensions = ['.xlsx', '.xls'];
+        const validFileExtensions = ['.xlsx', '.xls', '.png', '.jpg'];
 
         dropArea.addEventListener('dragover', (event) => {
             event.preventDefault();
@@ -39,9 +40,9 @@
             const files = event.dataTransfer.files;
             if (files.length > 0 && isValidFile(files[0])) {
                 fileInput.files = files;
-                dropArea.querySelector('p').textContent = files[0].name;
+                dropAreaText.textContent = files[0].name;
             } else {
-                alert('Hanya file Excel (.xlsx, .xls) yang diperbolehkan.');
+                alert('Hanya file Excel (.xlsx, .xls) dan gambar (.png, .jpg) yang diperbolehkan.');
             }
         });
 
@@ -52,11 +53,11 @@
         fileInput.addEventListener('change', () => {
             const files = fileInput.files;
             if (files.length > 0 && isValidFile(files[0])) {
-                dropArea.querySelector('p').textContent = files[0].name;
+                dropAreaText.textContent = files[0].name;
             } else {
-                alert('Hanya file Excel (.xlsx, .xls) yang diperbolehkan.');
+                alert('Hanya file Excel (.xlsx, .xls) dan gambar (.png, .jpg) yang diperbolehkan.');
                 fileInput.value = ''; // Reset file input
-                dropArea.querySelector('p').textContent = 'Drag and drop a file here or click to select a file';
+                dropAreaText.textContent = 'Drag and drop a file here or click to select a file';
             }
         });
 
@@ -68,7 +69,7 @@
 
     <style>
         .form-container {
-            padding: 0 5px; /* Add padding to left and right */
+            padding: 0 20px; /* Add padding to left and right */
         }
         .drop-area {
             border: 2px dashed #ccc;
@@ -76,10 +77,17 @@
             padding: 20px;
             text-align: center;
             cursor: pointer;
+            position: relative;
         }
         .drop-area.drag-over {
             border-color: #000;
             background-color: #f0f0f0;
+        }
+        .file-icon {
+            font-size: 2rem;
+            position: absolute;
+            top: 20px;
+            right: 20px;
         }
         .file-info {
             font-size: 0.875rem;
