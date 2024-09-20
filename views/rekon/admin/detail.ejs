@@ -29,7 +29,7 @@
                 <th scope="col" class="th-ttr-after-reduksi">
                   TTR After Reduksi
                 </th>
-                <th scope="col" class="th-eviden-regional">Eviden Regional</th>
+                <th scope="col" class="th-eviden-regional">Eviden</th>
                 <th scope="col" class="th-catatan-sda">Catatan SDA</th>
                 <th scope="col" class="th-validasi-sda">Validasi SDA</th>
                 <th scope="col" class="th-approved-not-ppq">
@@ -41,41 +41,50 @@
               </tr>
             </thead>
             <tbody>
-              <% for(var i = 0; i < data.length; i++){ %>
+              <% data.forEach((item, index) => { %>
                 <tr>
-                  <td scope="row"><%= (i + 1) %></td>
-                  <td><%= data[i].incident %></td>
-                  <td><%= data[i].customer %></td>
-                  <td><%= data[i].layanan %></td>
-                  <td><%= data[i].kategori %></td>
-                  <td><%= data[i].regional %></td>
-                  <td><%= data[i].witel %></td>
-                  <td><%= data[i].jenis_permintaan %></td>
-                  <td><%= data[i].reason %></td>
-                  <td><%= data[i].ttr_e2e_awal %></td>
-                  <td><%= data[i].ttr_after_reduksi %></td>
-                  <td><%= data[i].eviden_regional %></td>
-                  <td><%= data[i].catatan_sda %></td>
-                  <td><%= data[i].validasi_sda %></td>
-                  <td><%= data[i].approved_not_ppq %></td>
-                  <td><%= data[i].rep_rec %></td>
-                  <td><%= data[i].change_to %></td>
+                <th scope="row"><%= index + 1 %></th>
+                <td><%= item.incident %></td>
+                <td><%= item.customer %></td>
+                <td><%= item.layanan %></td>
+                <td><%= item.kategori %></td>
+                <td><%= item.regional %></td>
+                <td><%= item.witel %></td>
+                <td><%= item.jenis_permintaan %></td>
+                <td><%= item.reason %></td>
+                <td><%= item.ttr_e2e_awal %></td>
+                <td><%= item.ttr_after_reduksi %></td>
+                <td>
+                  <% if (item.eviden) { %>
+                    <% let files = item.eviden.split(','); %>
+                    <% files.forEach(function(file) { %>
+                      <img src="/images/upload/<%= encodeURIComponent(file) %>" alt="Eviden Regional" style="width: 200px; height: auto;" />
+                    <% }); %>
+                  <% } else { %>
+                    <p>No image available</p>
+                  <% } %>
+                </td>                                                                                   
+                <td><%= item.catatan_sda %></td>
+                <td><%= item.validasi_sda %></td>
+                <td><%= item.approved_not_ppq %></td>
+                <td><%= item.rep_rec %></td>
+                <td><%= item.change_to %></td>
                   <td>
-                    <% if (data[i].level_acc === 'kosong' || !data[i].level_acc) { %>
-                      <button onclick="updateLevelAcc('<%= data[i].id_rekon %>', 'approve')" class="btn btn-sm btn-success"><i class="fas fa-check"></i></button>
-                    <% } else if (data[i].level_acc === 'approve') { %>
+                    <% if (item.level_acc === 'waiting' || !item.level_acc) { %>
+                      <button onclick="updateLevelAcc('<%= item.id_rekon %>', 'approve')" class="btn btn-sm btn-success"><i class="fas fa-check"></i></button>
+                    <% } else if (item.level_acc === 'approve') { %>
                       <button class="btn btn-sm btn-success" disabled><i class="fas fa-check"></i></button>
                     <% } %>
                   </td>
                   <td>
-                    <% if (data[i].level_acc === 'kosong' || !data[i].level_acc) { %>
-                      <button onclick="updateLevelAcc('<%= data[i].id_rekon %>', 'reject')" class="btn btn-sm btn-danger"><i class="fas fa-times"></i> </button>
-                    <% } else if (data[i].level_acc === 'reject') { %>
+                    <% if (item.level_acc === 'waiting' || !item.level_acc) { %>
+                      <button onclick="updateLevelAcc('<%= item.id_rekon %>', 'reject')" class="btn btn-sm btn-danger"><i class="fas fa-times"></i> </button>
+                    <% } else if (item.level_acc === 'reject') { %>
                       <button class="btn btn-sm btn-danger" disabled><i class="fas fa-times"></i></button>
                     <% } %>
                   </td>                                                     
                 </tr>
-              <% } %>
+                <% }) %>
             </tbody>
           </table>
         </div>
@@ -99,7 +108,7 @@
         if (response.ok) {
             alert(result.message);
 
-            // Menggunakan `window.location.reload()` untuk memuat ulang halaman dan menampilkan data terbaru
+            // Menggunakan `window.location.reload()` untuk memuat ulang halaman dan menampilkan item terbaru
             window.location.reload(); // Ini untuk memastikan kondisi yang terbaru muncul setelah update
         } else {
             alert(result.error);

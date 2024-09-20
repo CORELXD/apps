@@ -32,7 +32,7 @@
                 <th scope="col" class="th-ttr-after-reduksi">
                   TTR After Reduksi
                 </th>
-                <th scope="col" class="th-eviden-regional">Eviden Regional</th>
+                <th scope="col" class="th-eviden-regional">Eviden</th>
                 <th scope="col" class="th-catatan-sda">Catatan SDA</th>
                 <th scope="col" class="th-validasi-sda">Validasi SDA</th>
                 <th scope="col" class="th-approved-not-ppq">
@@ -58,7 +58,16 @@
                 <td><%= item.reason %></td>
                 <td><%= item.ttr_e2e_awal %></td>
                 <td><%= item.ttr_after_reduksi %></td>
-                <td><img src="/images/<%= item.eviden_regional %>" alt="Eviden Regional" height="100"></td>
+                <td>
+                  <% if (item.eviden) { %>
+                    <% let files = item.eviden.split(','); %>
+                    <% files.forEach(function(file) { %>
+                      <img src="/images/upload/<%= encodeURIComponent(file) %>" alt="Eviden Regional" style="width: 200px; height: auto;" />
+                    <% }); %>
+                  <% } else { %>
+                    <p>No image available</p>
+                  <% } %>
+                </td>                                                                                   
                 <td><%= item.catatan_sda %></td>
                 <td><%= item.validasi_sda %></td>
                 <td><%= item.approved_not_ppq %></td>

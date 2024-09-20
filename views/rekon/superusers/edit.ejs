@@ -5,7 +5,7 @@
   
   <div class="container my-4">
     <div class="scrollable-form-container">
-      <form action="/rekon/update/<%= id_rekon %>" method="POST" class="scrollable-form">
+      <form action="/rekon/superusers/update/<%= id_rekon %>" method="POST" enctype="multipart/form-data"  class="scrollable-form">
         <div class="row mb-3">
           <div class="col-md-6">
             <label for="incident" class="form-label">Incident</label>
@@ -42,7 +42,6 @@
           <div class="col-md-6">
             <label for="jenis_permintaan" class="form-label">Jenis Permintaan</label>
             <select id="jenis_permintaan" class="form-control" name="jenis_permintaan">
-              <option value="kosong" <%= jenis_permintaan === 'kosong' ? 'selected' : '' %>>Kosong</option>
               <option value="exclude" <%= jenis_permintaan === 'exclude' ? 'selected' : '' %>>Exclude</option>
               <option value="reduksi" <%= jenis_permintaan === 'reduksi' ? 'selected' : '' %>>Reduksi</option>
             </select>
@@ -60,21 +59,18 @@
           </div>
           <div class="col-md-6">
             <label for="ttr_after_reduksi" class="form-label">TTR After Reduksi</label>
-            <select id="ttr_after_reduksi" class="form-control" name="ttr_after_reduksi">
-              <option value="kosong" <%= ttr_after_reduksi === 'kosong' ? 'selected' : '' %>>Kosong</option>
-              <option value="exclude" <%= ttr_after_reduksi === 'exclude' ? 'selected' : '' %>>Exclude</option>
-              <option value="reduksi" <%= ttr_after_reduksi === 'reduksi' ? 'selected' : '' %>>Reduksi</option>
-            </select>
+            <input type="text" id="ttr_after_reduksi" class="form-control" name="ttr_after_reduksi" value="<%= ttr_after_reduksi %>">
           </div>
           
         </div>
         
         <div class="row mb-3">
           <div class="col-md-6">
-            <img src="/images/<%= eviden_regional %>" height="100">
-            <label for="eviden_regional" class="form-label">Eviden Regional</label>
-            <input type="file" id="eviden_regional" class="form-control" name="eviden_regional">
-          </div>
+            <!-- Menampilkan gambar yang ada (hanya satu gambar pada contoh ini) -->
+            <img src="/images/upload/<%= eviden %>" height="100">
+            <label for="eviden" class="form-label">Eviden Regional</label>
+            <input type="file" id="eviden" class="form-control" name="eviden" multiple>
+          </div> 
           <div class="col-md-6">
             <label for="catatan_sda" class="form-label">Catatan SDA</label>
             <textarea id="catatan_sda" class="form-control" name="catatan_sda" rows="3"><%= catatan_sda %></textarea>

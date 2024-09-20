@@ -4,7 +4,27 @@
     border-collapse: collapse;
     table-layout: fixed;
     width: 300%; /* Menyesuaikan lebar tabel ke 100% dari container */
+    border: 1px solid #1c2024; /* Garis luar tabel */
   }
+
+
+    /* Memberikan garis pada seluruh sel dalam tabel (th dan td) */
+  .table th, .table td {
+    border: 1px solid #1c2024; /* Garis pada setiap sel */
+    padding: 8px; /* Menambahkan sedikit ruang dalam sel */
+    text-align: center; /* Align text ke tengah */
+  }
+
+  .table tbody td {
+    text-align: center; /* Center secara horizontal */
+    vertical-align: middle; /* Center secara vertikal */
+  }
+
+  .table tbody th {
+    text-align: center;
+    vertical-align: middle;
+  }
+
 
   .table th {
     overflow: hidden; /* Menghindari teks meluber keluar kolom */
@@ -21,6 +41,7 @@
     }
 
   .sticky-header th {
+    border-bottom: 1px solid #1c2024; /* Garis pada setiap sel */
     position: -webkit-sticky; /* For Safari */
     position: sticky;
     top: 0;
@@ -57,6 +78,7 @@
     width: 150px;
   }
   .th-catatan-sda {
+    width: 180px;
     background-color: wheat !important; /* Warna cream */
   }
 
@@ -109,28 +131,31 @@
   .th-jenis-permintaan {
     color: #343a40;
       background-color: #12aa12 !important; /* Warna mint */
-    background-color: #ccccff; /* Warna lavender */
+      width: 180px;
+      background-color: #ccccff; /* Warna lavender */
   }
 
   .th-reason {
     color: #343a40;
       background-color: #12aa12 !important; /* Warna mint */
-    width: 200px;
+    width: 180px;
   }
 
   .th-ttr-e2e-awal {
     color: #343a40;
+    width: 180px;
     background-color: #12aa12 !important; /* Warna mint */
   }
 
   .th-ttr-after-reduksi {
     color: #343a40;
+    width: 180px;
       background-color: #12aa12 !important; /* Warna mint */
   }
 
   .th-eviden-regional {
     color: #343a40;
-    width: 150px;
+    width: 250px;
     background-color: #12aa12 !important; /* Warna mint */
   }
   .th-status,

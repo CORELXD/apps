@@ -27,7 +27,7 @@
                 <th scope="col" class="th-ttr-after-reduksi">
                   TTR After Reduksi
                 </th>
-                <th scope="col" class="th-eviden-regional">Eviden Regional</th>
+                <th scope="col" class="th-eviden-regional">Eviden</th>
                 <th scope="col" class="th-catatan-sda">Catatan SDA</th>
                 <th scope="col" class="th-validasi-sda">Validasi SDA</th>
                 <th scope="col" class="th-approved-not-ppq">
@@ -40,36 +40,45 @@
               </tr>
             </thead>
             <tbody>
-              <% for(var i = 0; i < data.length; i++){ %>
+              <% data.forEach((item, index) => { %>
               <tr>
-                <th scope="row"><%= (i+1) %></th>
-                <td><%= data[i].incident %></td>
-                <td><%= data[i].customer %></td>
-                <td><%= data[i].layanan %></td>
-                <td><%= data[i].kategori %></td>
-                <td><%= data[i].regional %></td>
-                <td><%= data[i].witel %></td>
-                <td><%= data[i].jenis_permintaan %></td>
-                <td><%= data[i].reason %></td>
-                <td><%= data[i].ttr_e2e_awal %></td>
-                <td><%= data[i].ttr_after_reduksi %></td>
-                <td><%= data[i].eviden_regional %></td>
-                <td><%= data[i].catatan_sda %></td>
-                <td><%= data[i].validasi_sda %></td>
-                <td><%= data[i].approved_not_ppq %></td>
-                <td><%= data[i].rep_rec %></td>
-                <td><%= data[i].change_to %></td>
-                <td><%= data[i].level_acc %></td>
+                <th scope="row"><%= index + 1 %></th>
+                <td><%= item.incident %></td>
+                <td><%= item.customer %></td>
+                <td><%= item.layanan %></td>
+                <td><%= item.kategori %></td>
+                <td><%= item.regional %></td>
+                <td><%= item.witel %></td>
+                <td><%= item.jenis_permintaan %></td>
+                <td><%= item.reason %></td>
+                <td><%= item.ttr_e2e_awal %></td>
+                <td><%= item.ttr_after_reduksi %></td>
+                <td>
+                  <% if (item.eviden) { %>
+                    <% let files = item.eviden.split(','); %>
+                    <% files.forEach(function(file) { %>
+                      <img src="/images/upload/<%= encodeURIComponent(file) %>" alt="Eviden Regional" style="width: 200px; height: auto;" />
+                    <% }); %>
+                  <% } else { %>
+                    <p>No image available</p>
+                  <% } %>
+                </td>                                                                                   
+                <td><%= item.catatan_sda %></td>
+                <td><%= item.validasi_sda %></td>
+                <td><%= item.approved_not_ppq %></td>
+                <td><%= item.rep_rec %></td>
+                <td><%= item.change_to %></td>
+                <td><%= item.level_acc %></td>
                 <td>
                   <a
-                    href="/rekon/admin/detail/<%= data[i].id_rekon %>"
+                    href="/rekon/admin/detail/<%= item.id_rekon %>"
                     class="btn btn-sm btn-secondary"
                   >
                     <i class="fas fa-eye"></i> 
                   </a>
                 </td>
               </tr>
-              <% } %>
+              <% }) %>
             </tbody>
           </table>
           <a
@@ -85,7 +94,4 @@
     </div>
   </div>
   <%- include('../../partials/_foot.ejs') %>
-
-  <!-- Inline CSS -->
-  
 </body>

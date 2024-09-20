@@ -3,64 +3,69 @@
     <%- include('../partials/_navbar.ejs') %>
     <div class="content">
         <div class="container">
-      <!-- Container for the table to enable scrolling -->
-      <div class="table-container">
-        <h5>Data Rekon</h5>
-        <table class="table table-striped table-hover">
-          <thead class="sticky-header">
-            <tr>
-              <th scope="col" class="th-no">No</th>
-              <th scope="col" class="th-incident">Incident</th>
-              <th scope="col" class="th-customer">Customer</th>
-              <th scope="col" class="th-layanan">Layanan</th>
-              <th scope="col" class="th-kategori">Kategori</th>
-              <th scope="col" class="th-regional">Regional</th>
-              <th scope="col" class="th-witel">Witel</th>
-              <th scope="col" class="th-jenis-permintaan">Jenis Permintaan</th>
-              <th scope="col" class="th-reason">Reason</th>
-              <th scope="col" class="th-ttr-e2e-awal">TTR E2E Awal</th>
-              <th scope="col" class="th-ttr-after-reduksi">
-                TTR After Reduksi
-              </th>
-              <th scope="col" class="th-eviden-regional">Eviden Regional</th>
-              <th scope="col" class="th-catatan-sda">Catatan SDA</th>
-              <th scope="col" class="th-validasi-sda">Validasi SDA</th>
-              <th scope="col" class="th-approved-not-ppq">Approved Not PPQ</th>
-              <th scope="col" class="th-rep-rec">Rep/Rec</th>
-              <th scope="col" class="th-change-to">Change To</th>
-              <th scope="col" class="th-status">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% for(var i = 0; i < data.length; i++){ %>
-            <tr>
-              <th scope="row"><%= (i+1) %></th>
-              <td><%= data[i].incident %></td>
-              <td><%= data[i].customer %></td>
-              <td><%= data[i].layanan %></td>
-              <td><%= data[i].kategori %></td>
-              <td><%= data[i].regional %></td>
-              <td><%= data[i].witel %></td>
-              <td><%= data[i].jenis_permintaan %></td>
-              <td><%= data[i].reason %></td>
-              <td><%= data[i].ttr_e2e_awal %></td>
-              <td><%= data[i].ttr_after_reduksi %></td>
-              <td><%= data[i].eviden_regional %></td>
-              <td><%= data[i].catatan_sda %></td>
-              <td><%= data[i].validasi_sda %></td>
-              <td><%= data[i].approved_not_ppq %></td>
-              <td><%= data[i].rep_rec %></td>
-              <td><%= data[i].change_to %></td>
-              <td><%= data[i].level_acc %></td>
-            </tr>
-            <% } %>
-          </tbody>
-        </table>
-      </div>
+            <!-- Container for the table to enable scrolling -->
+            <div class="table-container">
+                <h5>Data Rekon</h5>
+                <table class="table table-striped table-hover">
+                    <thead class="sticky-header">
+                        <tr>
+                            <th scope="col" class="th-no">No</th>
+                            <th scope="col" class="th-incident">Incident</th>
+                            <th scope="col" class="th-customer">Customer</th>
+                            <th scope="col" class="th-layanan">Layanan</th>
+                            <th scope="col" class="th-kategori">Kategori</th>
+                            <th scope="col" class="th-regional">Regional</th>
+                            <th scope="col" class="th-witel">Witel</th>
+                            <th scope="col" class="th-jenis-permintaan">Jenis Permintaan</th>
+                            <th scope="col" class="th-reason">Reason</th>
+                            <th scope="col" class="th-ttr-e2e-awal">TTR E2E Awal</th>
+                            <th scope="col" class="th-ttr-after-reduksi">TTR After Reduksi</th>
+                            <th scope="col" class="th-eviden-regional">Eviden</th>
+                            <th scope="col" class="th-catatan-sda">Catatan SDA</th>
+                            <th scope="col" class="th-validasi-sda">Validasi SDA</th>
+                            <th scope="col" class="th-approved-not-ppq">Approved Not PPQ</th>
+                            <th scope="col" class="th-rep-rec">Rep/Rec</th>
+                            <th scope="col" class="th-change-to">Change To</th>
+                            <th scope="col" class="th-status">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% data.forEach((item, index) => { %>
+                        <tr>
+                            <th scope="row"><%= (index + 1) %></th>
+                            <td><%= item.incident %></td>
+                            <td><%= item.customer %></td>
+                            <td><%= item.layanan %></td>
+                            <td><%= item.kategori %></td>
+                            <td><%= item.regional %></td>
+                            <td><%= item.witel %></td>
+                            <td><%= item.jenis_permintaan %></td>
+                            <td><%= item.reason %></td>
+                            <td><%= item.ttr_e2e_awal %></td>
+                            <td><%= item.ttr_after_reduksi %></td>
+                            <td>
+                                <% if (item.eviden) { %>
+                                  <% let files = item.eviden.split(','); %>
+                                  <% files.forEach(function(file) { %>
+                                    <img src="/images/upload/<%= encodeURIComponent(file) %>" alt="Eviden Regional" style="width: 200px; height: auto;" />
+                                  <% }); %>
+                                <% } else { %>
+                                  <p>No image available</p>
+                                <% } %>
+                              </td>  
+                            <td><%= item.catatan_sda %></td>
+                            <td><%= item.validasi_sda %></td>
+                            <td><%= item.approved_not_ppq %></td>
+                            <td><%= item.rep_rec %></td>
+                            <td><%= item.change_to %></td>
+                            <td><%= item.level_acc %></td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <%- include('../partials/_foot.ejs') %>
-
-  <!-- Inline CSS -->
+    <%- include('../partials/_foot.ejs') %>
 </body>
