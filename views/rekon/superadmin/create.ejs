@@ -6,7 +6,7 @@
             <label for="import_file" class="form-label">Impor dari File</label>
             <div id="drop-area" class="drop-area">
                 <p id="drop-area-text">Drag and drop a file here or click to select a file</p>
-                <input type="file" id="import_file" class="form-control" name="import_file" accept=".xlsx, .xls, .png, .jpg" style="display: none;">
+                <input type="file" id="import_file" class="form-control" name="import_file" accept=".xlsx, .xls, .png, .jpg, .jpeg" style="display: none;">
                 <!-- <span class="file-icon">📁</span> -->
             </div>
         </div>
@@ -23,7 +23,7 @@
         const fileInput = document.getElementById('import_file');
         const dropAreaText = document.getElementById('drop-area-text');
 
-        const validFileExtensions = ['.xlsx', '.xls', '.png', '.jpg'];
+        const validFileExtensions = ['.xlsx', '.xls', '.png', '.jpg', '.jpeg'];
 
         dropArea.addEventListener('dragover', (event) => {
             event.preventDefault();
@@ -42,7 +42,7 @@
                 fileInput.files = files;
                 dropAreaText.textContent = files[0].name;
             } else {
-                alert('Hanya file Excel (.xlsx, .xls) dan gambar (.png, .jpg) yang diperbolehkan.');
+                alert('Hanya file Excel (.xlsx, .xls) dan gambar (.png, .jpg .jpeg) yang diperbolehkan.');
             }
         });
 
@@ -55,7 +55,7 @@
             if (files.length > 0 && isValidFile(files[0])) {
                 dropAreaText.textContent = files[0].name;
             } else {
-                alert('Hanya file Excel (.xlsx, .xls) dan gambar (.png, .jpg) yang diperbolehkan.');
+                alert('Hanya file Excel (.xlsx, .xls) dan gambar (.png, .jpg .jpeg) yang diperbolehkan.');
                 fileInput.value = ''; // Reset file input
                 dropAreaText.textContent = 'Drag and drop a file here or click to select a file';
             }

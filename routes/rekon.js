@@ -9,7 +9,7 @@ const multer = require("multer");
 const excel = require("exceljs");
 const path = require("path");
 const xlsx = require("xlsx");
-const MAX_FILE_SIZE_MB = 5 * 1024 * 1024; // 5MB in bytes
+
 
 
 const storage = multer.diskStorage({
@@ -22,7 +22,10 @@ const storage = multer.diskStorage({
 }
 });
 
-const upload = multer({ storage: storage });
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // Maksimal 5MB
+});
 
 // Menampilkan Data Pada Page Users
 router.get("/users", async function (req, res, next) {
@@ -261,79 +264,67 @@ router.get("/superadmin/edit/:id", async function (req, res, next) {
 });
 
 //update data by id dengan Role superadmin
-router.post('/update/:id', upload.array('eviden', 5), async (req, res) => {
+router.post('/update/:id', (req, res, next) => {
+  upload.array('eviden', 5)(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      // Jika terjadi error karena ukuran file melebihi batas
+      if (err.code === 'LIMIT_FILE_SIZE') {
+        req.flash("error", "Ukuran file melebihi 5MB. Silakan unggah file dengan ukuran lebih kecil.");
+        return res.redirect("/rekon/superadmin");
+      }
+    } else if (err) {
+      // Penanganan error lainnya
+      console.error("Error during file upload:", err);
+      req.flash("error", "Terjadi kesalahan saat mengunggah file.");
+      return res.redirect("/rekon/superadmin");
+    }
+    
+    // Lanjutkan ke proses berikutnya jika tidak ada error
+    next();
+  });
+}, async (req, res) => {
   try {
     let id = req.params.id;
-    let files = req.files; // Menggunakan req.files untuk array file
-    console.log("Files yang diunggah:", files);
-
+    let files = req.files;
+    
     // Mendapatkan data dari database berdasarkan ID
     let rows = await Model_Rekon.getId(id);
     let evidenLama = rows[0].eviden;
-    console.log("Eviden lama:", evidenLama);
-
+    
     // Hapus file lama jika ada file baru
     if (files.length > 0 && evidenLama) {
       const pathEvidenLama = path.join(__dirname, '../public/images/upload', evidenLama);
       if (fs.existsSync(pathEvidenLama)) {
         fs.unlinkSync(pathEvidenLama);
         console.log("File lama berhasil dihapus:", evidenLama);
-      } else {
-        console.log("File lama tidak ditemukan:", evidenLama);
       }
     }
 
-    // Mendapatkan data dari body request
+    // Simpan nama file baru
+    let eviden = files.map(file => file.filename).join(',');
+
+    // Mendapatkan data lain dari form
     let {
-        incident,
-        customer,
-        layanan,
-        kategori,
-        regional,
-        witel,
-        jenis_permintaan,
-        reason,
-        ttr_e2e_awal,
-        ttr_after_reduksi,
-        catatan_sda,
-        validasi_sda,
-        approved_not_ppq,
-        rep_rec,
-        change_to,
+      incident, customer, layanan, kategori, regional, witel, jenis_permintaan,
+      reason, ttr_e2e_awal, ttr_after_reduksi, catatan_sda, validasi_sda,
+      approved_not_ppq, rep_rec, change_to
     } = req.body;
 
-    // Menyimpan file terbaru atau eviden lama
-    let eviden = files.map(file => file.filename).join(','); // Menggabungkan nama file jika ada lebih dari satu
-    console.log("Eviden regional yang digunakan:", eviden);
-
-    // Siapkan objek data untuk update
+    // Update data di database
     let data = {
-        incident,
-        customer,
-        layanan,
-        kategori,
-        regional,
-        witel,
-        jenis_permintaan,
-        reason,
-        ttr_e2e_awal,
-        ttr_after_reduksi,
-        eviden, 
-        catatan_sda,
-        validasi_sda,
-        approved_not_ppq,
-        rep_rec,
-        change_to,
+      incident, customer, layanan, kategori, regional, witel, jenis_permintaan,
+      reason, ttr_e2e_awal, ttr_after_reduksi, eviden, catatan_sda, validasi_sda,
+      approved_not_ppq, rep_rec, change_to
     };
 
-    // Mengupdate data berdasarkan ID
     await Model_Rekon.update(id, data);
 
+    // Kirim notifikasi berhasil
     req.flash("success", "Berhasil memperbarui data!");
     res.redirect("/rekon/superadmin");
   } catch (err) {
     console.error("Error in /update/:id:", err);
-    req.flash("error", "Terjadi kesalahan pada fungsi.");
+    req.flash("error", "Terjadi kesalahan saat memperbarui data.");
     res.redirect("/rekon/superadmin");
   }
 });
@@ -428,79 +419,67 @@ router.get("/superusers/edit/:id", async function (req, res, next) {
 
 
 // Update data by id dengan Role superuser
-router.post('/superusers/update/:id', upload.array('eviden', 5), async (req, res) => {
+router.post('/superusers/update/:id', (req, res, next) => {
+  upload.array('eviden', 5)(req, res, (err) => {
+    if (err instanceof multer.MulterError) {
+      // Jika terjadi error karena ukuran file melebihi batas
+      if (err.code === 'LIMIT_FILE_SIZE') {
+        req.flash("error", "Ukuran file melebihi 5MB. Silakan unggah file dengan ukuran lebih kecil.");
+        return res.redirect("/rekon/superusers");
+      }
+    } else if (err) {
+      // Penanganan error lainnya
+      console.error("Error during file upload:", err);
+      req.flash("error", "Terjadi kesalahan saat mengunggah file.");
+      return res.redirect("/rekon/superusers");
+    }
+    
+    // Lanjutkan ke proses berikutnya jika tidak ada error
+    next();
+  });
+}, async (req, res) => {
   try {
     let id = req.params.id;
-    let files = req.files; // Menggunakan req.files untuk array file
-    console.log("Files yang diunggah:", files);
-
+    let files = req.files;
+    
     // Mendapatkan data dari database berdasarkan ID
     let rows = await Model_Rekon.getId(id);
     let evidenLama = rows[0].eviden;
-    console.log("Eviden lama:", evidenLama);
-
+    
     // Hapus file lama jika ada file baru
     if (files.length > 0 && evidenLama) {
       const pathEvidenLama = path.join(__dirname, '../public/images/upload', evidenLama);
       if (fs.existsSync(pathEvidenLama)) {
         fs.unlinkSync(pathEvidenLama);
         console.log("File lama berhasil dihapus:", evidenLama);
-      } else {
-        console.log("File lama tidak ditemukan:", evidenLama);
       }
     }
 
-    // Mendapatkan data dari body request
+    // Simpan nama file baru
+    let eviden = files.map(file => file.filename).join(',');
+
+    // Mendapatkan data lain dari form
     let {
-        incident,
-        customer,
-        layanan,
-        kategori,
-        regional,
-        witel,
-        jenis_permintaan,
-        reason,
-        ttr_e2e_awal,
-        ttr_after_reduksi,
-        catatan_sda,
-        validasi_sda,
-        approved_not_ppq,
-        rep_rec,
-        change_to,
+      incident, customer, layanan, kategori, regional, witel, jenis_permintaan,
+      reason, ttr_e2e_awal, ttr_after_reduksi, catatan_sda, validasi_sda,
+      approved_not_ppq, rep_rec, change_to
     } = req.body;
 
-    // Menyimpan file terbaru atau eviden lama
-    let eviden = files.map(file => file.filename).join(','); // Menggabungkan nama file jika ada lebih dari satu
-    console.log("Eviden regional yang digunakan:", eviden);
-
-    // Siapkan objek data untuk update
+    // Update data di database
     let data = {
-        incident,
-        customer,
-        layanan,
-        kategori,
-        regional,
-        witel,
-        jenis_permintaan,
-        reason,
-        ttr_e2e_awal,
-        ttr_after_reduksi,
-        eviden, 
-        catatan_sda,
-        validasi_sda,
-        approved_not_ppq,
-        rep_rec,
-        change_to,
+      incident, customer, layanan, kategori, regional, witel, jenis_permintaan,
+      reason, ttr_e2e_awal, ttr_after_reduksi, eviden, catatan_sda, validasi_sda,
+      approved_not_ppq, rep_rec, change_to
     };
 
-    // Mengupdate data berdasarkan ID
     await Model_Rekon.update(id, data);
 
+    // Kirim notifikasi berhasil
     req.flash("success", "Berhasil memperbarui data!");
     res.redirect("/rekon/superusers");
   } catch (err) {
     console.error("Error in /update/:id:", err);
-    req.flash("error", "Terjadi kesalahan pada fungsi.");
+    req.flash("error", "Terjadi kesalahan saat memperbarui data.");
     res.redirect("/rekon/superusers");
   }
 });
@@ -544,11 +523,9 @@ router.get("/admin/download", async function (req, res, next) {
     let rows = await Model_Rekon.getAll(); // Ambil semua data
 
     if (rows.length > 0) {
-      let workbookIndex = 1;
-      let workbook = new excel.Workbook();
-      let worksheet = workbook.addWorksheet("Rekon Data");
+      const workbook = new excel.Workbook();
+      const worksheet = workbook.addWorksheet("Rekon Data");
 
-      // Definisikan kolom-kolom Excel
       worksheet.columns = [
         { header: "No", key: "No", width: 5 },
         { header: "Incident", key: "incident", width: 10 },
@@ -574,7 +551,6 @@ router.get("/admin/download", async function (req, res, next) {
       worksheet.getRow(1).alignment = { horizontal: 'center', vertical: 'middle' };
 
       let index = 1;
-
       for (const row of rows) {
         const rowIndex = worksheet.addRow({
           No: index++,
@@ -599,7 +575,6 @@ router.get("/admin/download", async function (req, res, next) {
 
         worksheet.getRow(rowIndex).alignment = { horizontal: 'center', vertical: 'middle' };
 
-        // Proses gambar eviden
         if (row.eviden) {
           let evidenArray;
           try {
@@ -612,16 +587,17 @@ router.get("/admin/download", async function (req, res, next) {
           }
 
           const totalImages = evidenArray.length;
+
           const maxWidth = 150;
           const maxHeight = 130;
           const heightPerImage = maxHeight / totalImages;
 
           for (const evidenItem of evidenArray) {
             const imagePath = path.join(__dirname, '../public/images/upload/', evidenItem.trim());
-
+            
             if (fs.existsSync(imagePath)) {
               const compressedImagePath = path.join(__dirname, '../public/images/upload/', 'compressed_' + evidenItem.trim());
-
+              
               await sharp(imagePath)
                 .resize({ width: 800 }) // Sesuaikan ukuran
                 .jpeg({ quality: 80 }) // Kompresi gambar
@@ -634,45 +610,30 @@ router.get("/admin/download", async function (req, res, next) {
 
               worksheet.addImage(imageId, {
                 tl: { col: 11, row: rowIndex - 1 },
-                ext: { width: maxWidth, height: heightPerImage },
+                ext: { width: maxWidth, height: heightPerImage }, 
               });
             }
           }
 
           worksheet.getRow(rowIndex).height = heightPerImage * totalImages;
         }
-
-        // Cek ukuran file setelah setiap penambahan data
-        let buffer = await workbook.xlsx.writeBuffer();
-        if (buffer.length >= MAX_FILE_SIZE_MB) {
-          // Simpan file yang sudah melebihi ukuran
-          res.setHeader("Content-Disposition", `attachment; filename=rekon_data_${workbookIndex}.xlsx`);
-          res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-          await res.send(buffer);
-
-          // Mulai workbook baru
-          workbookIndex++;
-          workbook = new excel.Workbook();
-          worksheet = workbook.addWorksheet("Rekon Data");
-
-          worksheet.columns = [
-            { header: "No", key: "No", width: 5 },
-            { header: "Incident", key: "incident", width: 10 },
-            // Definisikan ulang kolom lain seperti di atas...
-          ];
-
-          worksheet.getRow(1).font = { bold: true };
-          worksheet.getRow(1).alignment = { horizontal: 'center', vertical: 'middle' };
-        }
       }
 
-      // Simpan file terakhir jika belum mencapai batas ukuran
-      let finalBuffer = await workbook.xlsx.writeBuffer();
-      res.setHeader("Content-Disposition", `attachment; filename=rekon_data_part_${workbookIndex}.xlsx`);
-      res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-      await res.send(finalBuffer);
-      res.end();
+      worksheet.eachRow({ includeEmpty: true }, (row) => {
+        row.eachCell({ includeEmpty: true }, (cell) => {
+          cell.border = {
+            top: { style: 'thin', color: { argb: 'FF000000' } },
+            left: { style: 'thin', color: { argb: 'FF000000' } },
+            bottom: { style: 'thin', color: { argb: 'FF000000' } },
+            right: { style: 'thin', color: { argb: 'FF000000' } }
+          };
+        });
+      });
 
+      res.setHeader("Content-Disposition", "attachment; filename=rekon_data.xlsx");
+      res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+      await workbook.xlsx.write(res);
+      res.end();
     } else {
       req.flash("error", "Data tidak ditemukan untuk diunduh.");
       res.redirect("/admin");
@@ -683,6 +644,7 @@ router.get("/admin/download", async function (req, res, next) {
     res.redirect("/admin");
   }
 });
+
 
 // Mengupdate level_acc pada rekon berdasarkan ID
 router.post("/admin/detail/:id", async (req, res) => {

@@ -3,6 +3,17 @@
   <%- include('../../partials/_navbar.ejs') %>
   <div class="content">
     <div class="container">
+      <!-- Flash message di bagian atas form -->
+      <% if (messages.error) { %>
+        <div class="alert alert-danger">
+          <%= messages.error %>
+        </div>
+      <% } %>
+      <% if (messages.success) { %>
+        <div class="alert alert-success">
+          <%= messages.success %>
+        </div>
+      <% } %>
       <!-- Container for the table to enable scrolling -->
       <div class="table-container">
         <h5>Data Rekon</h5>

@@ -67,7 +67,14 @@
         <div class="row mb-3">
           <div class="col-md-6">
             <!-- Menampilkan gambar yang ada (hanya satu gambar pada contoh ini) -->
-            <img src="/images/upload/<%= eviden %>" height="100">
+            <% if (eviden) { %>
+              <% let files = eviden.split(','); %>
+              <% files.forEach(function(file) { %>
+                <img src="/images/upload/<%= encodeURIComponent(file.trim()) %>" height="100" style="margin-right: 5px;" alt="Eviden Regional">
+              <% }); %>
+            <% } else { %>
+              <p>No image available</p>
+            <% } %>
             <label for="eviden" class="form-label">Eviden Regional</label>
             <input type="file" id="eviden" class="form-control" name="eviden" multiple>
           </div> 

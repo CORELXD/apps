@@ -1,44 +1,43 @@
  
  /* Tampilan Seluruh role pada Bagian Tabel */
  .table {
-    border-collapse: collapse;
-    table-layout: fixed;
-    width: 300%; /* Menyesuaikan lebar tabel ke 100% dari container */
-    border: 1px solid #1c2024; /* Garis luar tabel */
-  }
+  border-collapse: collapse;
+  table-layout: fixed;
+  width: 100%; /* Menyesuaikan lebar tabel ke 100% dari container */
+  border: 1px solid #1c2024; /* Garis luar tabel */
+}
 
+/* Memberikan garis pada seluruh sel dalam tabel (th dan td) */
+.table th, .table td {
+  border: 1px solid #1c2024; /* Garis pada setiap sel */
+  padding: 8px; /* Menambahkan sedikit ruang dalam sel */
+  text-align: center; /* Align text ke tengah */
+}
 
-    /* Memberikan garis pada seluruh sel dalam tabel (th dan td) */
-  .table th, .table td {
-    border: 1px solid #1c2024; /* Garis pada setiap sel */
-    padding: 8px; /* Menambahkan sedikit ruang dalam sel */
-    text-align: center; /* Align text ke tengah */
-  }
+.table tbody td {
+  text-align: center; /* Center secara horizontal */
+  vertical-align: middle; /* Center secara vertikal */
+}
 
-  .table tbody td {
-    text-align: center; /* Center secara horizontal */
-    vertical-align: middle; /* Center secara vertikal */
-  }
+.table tbody th {
+  text-align: center;
+  vertical-align: middle;
+}
 
-  .table tbody th {
-    text-align: center;
-    vertical-align: middle;
-  }
+.table th {
+  overflow: hidden; /* Menghindari teks meluber keluar kolom */
+  text-overflow: ellipsis; /* Menambahkan "..." jika teks terlalu panjang */
+  white-space: nowrap; /* Mencegah pembungkusan teks */
+}
 
+.table-container {
+  max-height: 400px;
+  overflow-y: auto;
+}
 
-  .table th {
-    overflow: hidden; /* Menghindari teks meluber keluar kolom */
-    text-overflow: ellipsis; /* Menambahkan "..." jika teks terlalu panjang */
-    white-space: nowrap; /* Mencegah pembungkusan teks */
-  }
-  .table-container {
-    max-height: 400px;
-    overflow-y: auto;
-  }
-  
-  .table-container::-webkit-scrollbar {
-      display: none; /* Hides scrollbar for WebKit browsers (Chrome, Safari) */
-    }
+.table-container::-webkit-scrollbar {
+  display: none; /* Hides scrollbar for WebKit browsers (Chrome, Safari) */
+}
 
   .sticky-header th {
     border-bottom: 1px solid #1c2024; /* Garis pada setiap sel */
