@@ -1,17 +1,37 @@
 <%- include('../partials/_head.ejs') %>
 <body>
-  <%- include('../partials/_navbar.ejs') %>
-  <div class="content">
-    <div class="container">
-         <!-- Page Heading -->
-         <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">Selamat Datang</h1>
-        </div>
-        <div class="row">
-            <div class="col">
-                <h1>Hello : <%= username %></h1>
+    <%- include('../partials/_navbar.ejs') %>
+
+    <div class="content">
+        <div class="container">
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">Selamat Datang</h1>
             </div>
+            <div class="row">
+                <div class="col">
+                    <h1>Hello : <%= username %></h1>
+                </div>
+            </div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Witel</th>
+                        <th>Jumlah</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% Object.keys(witelCounts).forEach((witel, index) => { %>
+                        <tr>
+                            <td><%= index + 1 %></td>
+                            <td><%= witel %></td>
+                            <td><%= witelCounts[witel] %></td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
         </div>
     </div>
-</div>
-  <%- include('../partials/_foot.ejs') %>
+    <%- include('../partials/_foot.ejs') %>
+</body>

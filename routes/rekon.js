@@ -17,9 +17,20 @@ const storage = multer.diskStorage({
     cb(null, path.join(__dirname, '../public/images/upload/')); // Sesuaikan dengan path direktori
   },
   filename: (req, file, cb) => {
-    console.log(file);
-    cb(null, Date.now() + path.extname(file.originalname));
-}
+    const originalName = file.originalname;
+    const fileExtension = path.extname(originalName);
+    const baseName = path.basename(originalName, fileExtension);
+    let newName = originalName;
+    let count = 1;
+
+    // Cek apakah file dengan nama yang sama sudah ada
+    while (fs.existsSync(path.join(__dirname, '../public/images/upload/', newName))) {
+      newName = `${baseName}(${count})${fileExtension}`; // Mengubah nama file untuk menghindari konflik
+      count++;
+    }
+
+    cb(null, newName); // Simpan dengan nama yang telah dimodifikasi
+  }
 });
 
 const upload = multer({
@@ -32,13 +43,39 @@ router.get("/users", async function (req, res, next) {
   let id = req.session.userId;
   let rows2 = await Model_Users.getId(id);
   let rows = await Model_Rekon.getAll();
-  const role = req.session.userRole; // Assuming role is stored in session
-  const email = req.session.userEmail; // Assuming email is stored in session
+  const role = req.session.userRole;
+  const email = req.session.userEmail;
+
+  // Inisialisasi witelCounts
+  const witelCounts = {
+      'Surabaya Utara': 0,
+      'Surabaya Selatan': 0,
+      'Madura': 0,
+      'Sidoarjo': 0,
+      'Pasuruan': 0,
+      'Jember': 0,
+      'Malang': 0,
+      'Kediri': 0,
+      'Madiun': 0,
+      'Denpasar': 0,
+      'Singaraja': 0,
+      'NTB': 0,
+      'NTT': 0,  
+    };
+
+  // Hitung jumlah untuk setiap witel
+  rows.forEach((item) => {
+      if (item.witel in witelCounts) {
+          witelCounts[item.witel]++;
+      }
+  });
+
   res.render("rekon/users", {
-    data: rows,
-    role: role,
-    username: rows2[0].username, // Pastikan username dikirim ke view
-    email: email,
+      data: rows,
+      role: role,
+      username: rows2[0].username,
+      email: email,
+      witelCounts: witelCounts, // Kirim witelCounts ke view
   });
 });
 
@@ -47,44 +84,121 @@ router.get("/superusers", async function (req, res, next) {
   let id = req.session.userId;
   let rows2 = await Model_Users.getId(id);
   let rows = await Model_Rekon.getAll();
-  const role = req.session.userRole; // Assuming role is stored in session
-  const email = req.session.userEmail; // Assuming email is stored in session
+  const role = req.session.userRole;
+  const email = req.session.userEmail;
+
+  // Inisialisasi witelCounts
+  const witelCounts = {
+      'Surabaya Utara': 0,
+      'Surabaya Selatan': 0,
+      'Madura': 0,
+      'Sidoarjo': 0,
+      'Pasuruan': 0,
+      'Jember': 0,
+      'Malang': 0,
+      'Kediri': 0,
+      'Madiun': 0,
+      'Denpasar': 0,
+      'Singaraja': 0,
+      'NTB': 0,
+      'NTT': 0,  
+    };
+
+  // Hitung jumlah untuk setiap witel
+  rows.forEach((item) => {
+      if (item.witel in witelCounts) {
+          witelCounts[item.witel]++;
+      }
+  });
+
   res.render("rekon/superusers/home", {
-    data: rows,
-    role: role,
-    username: rows2[0].username, // Pastikan username dikirim ke view
-    email: email,
+      data: rows,
+      role: role,
+      username: rows2[0].username,
+      email: email,
+      witelCounts: witelCounts, // Kirim witelCounts ke view
   });
 });
 
 //Menampilkan Data Pada Page Admin
 router.get("/admin", async function (req, res, next) {
   let id = req.session.userId;
-  let rows = await Model_Rekon.getAll();
   let rows2 = await Model_Users.getId(id);
-  const role = req.session.userRole; // Assuming role is stored in session
-  const email = req.session.userEmail; // Assuming email is stored in session
+  let rows = await Model_Rekon.getAll();
+  const role = req.session.userRole;
+  const email = req.session.userEmail;
+
+  // Inisialisasi witelCounts
+  const witelCounts = {
+      'Surabaya Utara': 0,
+      'Surabaya Selatan': 0,
+      'Madura': 0,
+      'Sidoarjo': 0,
+      'Pasuruan': 0,
+      'Jember': 0,
+      'Malang': 0,
+      'Kediri': 0,
+      'Madiun': 0,
+      'Denpasar': 0,
+      'Singaraja': 0,
+      'NTB': 0,
+      'NTT': 0,  
+    };
+
+  // Hitung jumlah untuk setiap witel
+  rows.forEach((item) => {
+      if (item.witel in witelCounts) {
+          witelCounts[item.witel]++;
+      }
+  });
 
   res.render("rekon/admin/home", {
-    data: rows,
-    role: role,
-    username: rows2[0].username, // Pastikan username dikirim ke view
-    email: email,
+      data: rows,
+      role: role,
+      username: rows2[0].username,
+      email: email,
+      witelCounts: witelCounts, // Kirim witelCounts ke view
   });
 });
 
 //Menampilkan Data Pada Page SuperAdmin
 router.get("/superadmin", async function (req, res, next) {
   let id = req.session.userId;
-  let rows = await Model_Rekon.getAll();
   let rows2 = await Model_Users.getId(id);
-  const role = req.session.userRole; // Assuming role is stored in session
+  let rows = await Model_Rekon.getAll();
+  const role = req.session.userRole;
   const email = req.session.userEmail;
+
+  // Inisialisasi witelCounts
+  const witelCounts = {
+      'Surabaya Utara': 0,
+      'Surabaya Selatan': 0,
+      'Madura': 0,
+      'Sidoarjo': 0,
+      'Pasuruan': 0,
+      'Jember': 0,
+      'Malang': 0,
+      'Kediri': 0,
+      'Madiun': 0,
+      'Denpasar': 0,
+      'Singaraja': 0,
+      'NTB': 0,
+      'NTT': 0,  
+    };
+
+  // Hitung jumlah untuk setiap witel
+  rows.forEach((item) => {
+      if (item.witel in witelCounts) {
+          witelCounts[item.witel]++;
+      }
+  });
+
   res.render("rekon/superadmin/home", {
-    data: rows,
-    role: role,
-    email: email,
-    username: rows2[0].username, // Pastikan username dikirim ke view
+      data: rows,
+      role: role,
+      username: rows2[0].username,
+      email: email,
+      witelCounts: witelCounts, // Kirim witelCounts ke view
   });
 });
 
@@ -291,17 +405,22 @@ router.post('/update/:id', (req, res, next) => {
     let rows = await Model_Rekon.getId(id);
     let evidenLama = rows[0].eviden;
     
-    // Hapus file lama jika ada file baru
-    if (files.length > 0 && evidenLama) {
-      const pathEvidenLama = path.join(__dirname, '../public/images/upload', evidenLama);
-      if (fs.existsSync(pathEvidenLama)) {
-        fs.unlinkSync(pathEvidenLama);
-        console.log("File lama berhasil dihapus:", evidenLama);
+    let eviden;
+    if (files.length > 0) {
+      // Hapus file lama jika ada file baru
+      if (evidenLama) {
+        const pathEvidenLama = path.join(__dirname, '../public/images/upload', evidenLama);
+        if (fs.existsSync(pathEvidenLama)) {
+          fs.unlinkSync(pathEvidenLama);
+          console.log("File lama berhasil dihapus:", evidenLama);
+        }
       }
+      // Simpan nama file baru
+      eviden = files.map(file => file.filename).join(',');
+    } else {
+      // Gunakan gambar lama jika tidak ada file baru
+      eviden = evidenLama;
     }
-
-    // Simpan nama file baru
-    let eviden = files.map(file => file.filename).join(',');
 
     // Mendapatkan data lain dari form
     let {
@@ -328,6 +447,7 @@ router.post('/update/:id', (req, res, next) => {
     res.redirect("/rekon/superadmin");
   }
 });
+
 
 
 // Menghapus data by ID dengan Role Superadmin
@@ -446,17 +566,23 @@ router.post('/superusers/update/:id', (req, res, next) => {
     let rows = await Model_Rekon.getId(id);
     let evidenLama = rows[0].eviden;
     
-    // Hapus file lama jika ada file baru
-    if (files.length > 0 && evidenLama) {
-      const pathEvidenLama = path.join(__dirname, '../public/images/upload', evidenLama);
-      if (fs.existsSync(pathEvidenLama)) {
-        fs.unlinkSync(pathEvidenLama);
-        console.log("File lama berhasil dihapus:", evidenLama);
+    // Jika ada file baru yang diunggah
+    let eviden;
+    if (files.length > 0) {
+      // Hapus file lama jika ada file baru
+      if (evidenLama) {
+        const pathEvidenLama = path.join(__dirname, '../public/images/upload', evidenLama);
+        if (fs.existsSync(pathEvidenLama)) {
+          fs.unlinkSync(pathEvidenLama);
+          console.log("File lama berhasil dihapus:", evidenLama);
+        }
       }
+      // Simpan nama file baru
+      eviden = files.map(file => file.filename).join(',');
+    } else {
+      // Jika tidak ada file baru, tetap gunakan file lama
+      eviden = evidenLama;
     }
-
-    // Simpan nama file baru
-    let eviden = files.map(file => file.filename).join(',');
 
     // Mendapatkan data lain dari form
     let {

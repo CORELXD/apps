@@ -55,4 +55,10 @@
   .scrollable-form-container::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+
+  .foto-info {
+    color: red;
+    font-size: 10px;
+    display: block;
+  }
   

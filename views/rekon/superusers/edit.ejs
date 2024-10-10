@@ -34,8 +34,22 @@
           </div>
           <div class="col-md-6">
             <label for="witel" class="form-label">Witel</label>
-            <input type="text" id="witel" class="form-control" name="witel" value="<%= witel %>">
-          </div>
+            <select id="witel" class="form-control" name="witel">
+              <option value="Surabaya Utara" <%= witel === 'Surabaya Utara' ? 'selected' : '' %>>Surabaya Utara</option>
+              <option value="Surabaya Selatan" <%= witel === 'Surabaya Selatan' ? 'selected' : '' %>>Surabaya Selatan</option>
+              <option value="Madura" <%= witel === 'Madura' ? 'selected' : '' %>>Madura</option>
+              <option value="Sidoarjo" <%= witel === 'Sidoarjo' ? 'selected' : '' %>>Sidoarjo</option>
+              <option value="Pasuruan" <%= witel === 'Pasuruan' ? 'selected' : '' %>>Pasuruan</option>
+              <option value="Jember" <%= witel === 'Jember' ? 'selected' : '' %>>Jember</option>
+              <option value="Malang" <%= witel === 'Malang' ? 'selected' : '' %>>Malang</option>
+              <option value="Kediri" <%= witel === 'Kediri' ? 'selected' : '' %>>Kediri</option>
+              <option value="Madiun" <%= witel === 'Madiun' ? 'selected' : '' %>>Madiun</option>
+              <option value="Denpasar" <%= witel === 'Denpasar' ? 'selected' : '' %>>Denpasar</option>
+              <option value="Singaraja" <%= witel === 'Singaraja' ? 'selected' : '' %>>Singaraja</option>
+              <option value="NTB" <%= witel === 'NTB' ? 'selected' : '' %>>NTB</option>
+              <option value="NTT" <%= witel === 'NTT' ? 'selected' : '' %>>NTT</option>
+            </select>
+          </div>          
         </div>
         
         <div class="row mb-3">
@@ -77,6 +91,8 @@
             <% } %>
             <label for="eviden" class="form-label">Eviden Regional</label>
             <input type="file" id="eviden" class="form-control" name="eviden" multiple>
+            <span class="foto-info">*Name File (Eviden) Sesuai dengan No_tiket(exp:INCXXXXXXXX)</span>
+              <span class="foto-info">*jika (Eviden) Lebih Dari 1 Foto Maka Jadi kan Kolase</span>
           </div> 
           <div class="col-md-6">
             <label for="catatan_sda" class="form-label">Catatan SDA</label>
