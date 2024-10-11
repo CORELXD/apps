@@ -51,18 +51,21 @@ class Model_Rekon {
     });
   }
 
-   // Mengupdate data level_acc
-   static async updateLevelAcc(id, level_acc) {
+  // Mengupdate data level_acc dan reject_reason
+  static async updateLevelAcc(id, level_acc, reject_reason) {
     return new Promise((resolve, reject) => {
       connection.query(
-        "UPDATE rekon SET level_acc = ? WHERE id_rekon = ?",
-        [level_acc, id],
+        "UPDATE rekon SET level_acc = ?, reject_reason = ? WHERE id_rekon = ?",
+        [level_acc, reject_reason, id], // Menambahkan reject_reason ke dalam parameter
         (err, result) => {
           if (err) {
             console.error("Database query error in updateLevelAcc:", err); // Tambahkan logging
             reject(err);
           } else {
-            console.log("Level_acc updated successfully:", result); // Tambahkan logging
+            console.log(
+              "Level_acc and reject_reason updated successfully:",
+              result
+            ); // Tambahkan logging
             resolve(result);
           }
         }

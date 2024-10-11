@@ -137,7 +137,7 @@
   .th-reason {
     color: #343a40;
       background-color: #12aa12 !important; /* Warna mint */
-    width: 180px;
+    width: 220px;
   }
 
   .th-ttr-e2e-awal {
@@ -157,6 +157,7 @@
     width: 250px;
     background-color: #12aa12 !important; /* Warna mint */
   }
+  
   .th-status,
   .th-aksi  {
     background-color: #343a40 !important;
@@ -164,7 +165,35 @@
     width: 100px; /* Warna abu-abu lembut */
   }
 
+  .th-reject-reason {
+    background-color: #343a40 !important;
+    color: white !important;
+    width: 300px; /* Warna abu-abu lembut */
+  }
+
 /* button Pada Bagian role admin */
   .btn-approve, .btn-reject {
     width: 100px; /* Lebar tombol seragam */
   }
+
+  .filter-download-container {
+    display: flex;
+    justify-content: flex-end; /* Menyelaraskan elemen di sebelah kiri */
+    align-items: center; /* Menyelaraskan secara vertikal */
+  }
+  
+  .filter-section {
+    margin-right: 10px; /* Memberi sedikit jarak antara filter dan tombol download */
+  }
+  
+  .filter-add-container {
+    display: flex;
+    justify-content: flex-end; /* Menyelaraskan semua elemen ke kiri */
+    align-items: center; /* Menyelaraskan secara vertikal */
+  }
+  
+  .filter-section {
+    margin-right: 10px; /* Memberi jarak antara filter dan tombol tambah */
+  }
+  
+  

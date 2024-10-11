@@ -3,6 +3,27 @@
     <%- include('../partials/_navbar.ejs') %>
     <div class="content">
         <div class="container">
+            <!-- Filter Section -->
+            <div class="filter-section" style="text-align: right; margin-bottom: 5px;">
+                <label for="witelFilter">Filter:</label>
+                <select id="witelFilter" class="form-control" style="width: 150px; display: inline-block;">
+                    <option value="">All</option>
+                    <option value="Surabaya Utara">Surabaya Utara</option>
+                    <option value="Surabaya Selatan">Surabaya Selatan</option>
+                    <option value="Madura">Madura</option>
+                    <option value="Sidoarjo">Sidoarjo</option>
+                    <option value="Pasuruan">Pasuruan</option>
+                    <option value="Jember">Jember</option>
+                    <option value="Malang">Malang</option>
+                    <option value="Kediri">Kediri</option>
+                    <option value="Madiun">Madiun</option>
+                    <option value="Denpasar">Denpasar</option>
+                    <option value="Singaraja">Singaraja</option>
+                    <option value="NTB">NTB</option>
+                    <option value="NTT">NTT</option>
+                </select>
+            </div>
+
             <!-- Container for the table to enable scrolling -->
             <div class="table-container">
                 <h5>Data Rekon</h5>
@@ -27,11 +48,12 @@
                             <th scope="col" class="th-rep-rec">Rep/Rec</th>
                             <th scope="col" class="th-change-to">Change To</th>
                             <th scope="col" class="th-status">Status</th>
+                            <th scope="col" class="th-reject-reason">Reject Reason</th>
                         </tr>
                     </thead>
                     <tbody>
                         <% data.forEach((item, index) => { %>
-                        <tr>
+                        <tr class="rekon-row" data-witel="<%= item.witel %>">   
                             <th scope="row"><%= (index + 1) %></th>
                             <td><%= item.incident %></td>
                             <td><%= item.customer %></td>
@@ -52,13 +74,14 @@
                                 <% } else { %>
                                   <p>No image available</p>
                                 <% } %>
-                              </td>  
+                              </td>
                             <td><%= item.catatan_sda %></td>
                             <td><%= item.validasi_sda %></td>
                             <td><%= item.approved_not_ppq %></td>
                             <td><%= item.rep_rec %></td>
                             <td><%= item.change_to %></td>
                             <td><%= item.level_acc %></td>
+                            <td><%= item.reject_reason %></td>
                         </tr>
                         <% }) %>
                     </tbody>
@@ -68,4 +91,6 @@
     </div>
 
     <%- include('../partials/_foot.ejs') %>
+
+    <script src="/javascripts/filter.js"></script>
 </body>

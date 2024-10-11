@@ -3,9 +3,38 @@
   <%- include('../../partials/_navbar.ejs') %>
   <div class="container mt-3">
     <% if (messages.success) { %>
-    <div class="alert alert-info" role="alert"><%- messages.success %></div>
-    <% } %>
+      <div class="alert alert-info" role="alert"><%- messages.success %></div>
+      <% } %>
+      
     <h5>Data Rekon</h5>
+    <!-- Filter Section -->
+    <div class="filter-download-container mb-1">
+      <div class="filter-section">
+        <label for="witelFilter">Filter Witel:</label>
+        <select id="witelFilter" class="form-control" style="width: 150px; display: inline-block;">
+          <option value="">All</option>
+          <option value="Surabaya Utara">Surabaya Utara</option>
+          <option value="Surabaya Selatan">Surabaya Selatan</option>
+          <option value="Madura">Madura</option>
+          <option value="Sidoarjo">Sidoarjo</option>
+          <option value="Pasuruan">Pasuruan</option>
+          <option value="Jember">Jember</option>
+          <option value="Malang">Malang</option>
+          <option value="Kediri">Kediri</option>
+          <option value="Madiun">Madiun</option>
+          <option value="Denpasar">Denpasar</option>
+          <option value="Singaraja">Singaraja</option>
+          <option value="NTB">NTB</option>
+          <option value="NTT">NTT</option>
+        </select>
+      </div>
+      <div>
+        <a href="/rekon/admin/download" class="btn btn-primary btn-sm" role="button" aria-pressed="true">
+          <i class="fas fa-download"></i> Download Excel
+        </a>
+      </div>
+    </div>
+    
     <div class="row">
       <div class="col">
         <div class="table-container">
@@ -36,12 +65,13 @@
                 <th scope="col" class="th-rep-rec">Rep/Rec</th>
                 <th scope="col" class="th-change-to">Change To</th>
                 <th scope="col" class="th-status">Status</th>
+                <th scope="col" class="th-reject-reason">Reject Reason</th>
                 <th scope="col" class="th-aksi">Aksi</th>
               </tr>
             </thead>
             <tbody>
               <% data.forEach((item, index) => { %>
-              <tr>
+              <tr class="rekon-row" data-witel="<%= item.witel %>">
                 <th scope="row"><%= index + 1 %></th>
                 <td><%= item.incident %></td>
                 <td><%= item.customer %></td>
@@ -62,18 +92,16 @@
                   <% } else { %>
                     <p>No image available</p>
                   <% } %>
-                </td>                                                                                   
+                </td>                                                                                 
                 <td><%= item.catatan_sda %></td>
                 <td><%= item.validasi_sda %></td>
                 <td><%= item.approved_not_ppq %></td>
                 <td><%= item.rep_rec %></td>
                 <td><%= item.change_to %></td>
                 <td><%= item.level_acc %></td>
+                <td><%= item.reject_reason %></td>
                 <td>
-                  <a
-                    href="/rekon/admin/detail/<%= item.id_rekon %>"
-                    class="btn btn-sm btn-secondary"
-                  >
+                  <a href="/rekon/admin/detail/<%= item.id_rekon %>" class="btn btn-sm btn-secondary">
                     <i class="fas fa-eye"></i> 
                   </a>
                 </td>
@@ -81,17 +109,13 @@
               <% }) %>
             </tbody>
           </table>
-          <a
-            href="/rekon/admin/download"
-            class="btn btn-primary btn-sm"
-            role="button"
-            aria-pressed="true"
-          >
-            <i class="fas fa-download"></i> Download Excel
-          </a>
+          
         </div>
       </div>
     </div>
   </div>
+
   <%- include('../../partials/_foot.ejs') %>
+
+  <script src="../javascripts/filter.js"></script>
 </body>

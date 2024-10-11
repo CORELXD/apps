@@ -773,28 +773,24 @@ router.get("/admin/download", async function (req, res, next) {
 
 
 // Mengupdate level_acc pada rekon berdasarkan ID
-router.post("/admin/detail/:id", async (req, res) => {
-  const { id } = req.params;
-  const { level_acc } = req.body;
+router.post('/admin/detail/:id', async (req, res) => {
+  const { level_acc, reject_reason } = req.body;
+  const id = req.params.id;
 
   try {
-    // Validate level_acc before updating (optional)
-    if (!["approve", "reject"].includes(level_acc)) {
-      return res.status(400).json({ error: "Invalid level_acc value" });
+    // Validasi level_acc
+    if (level_acc === 'approve' || level_acc === 'reject') {
+      // Lakukan update di database
+      await Model_Rekon.updateLevelAcc(id, level_acc, reject_reason);
+      return res.json({ message: 'Status updated successfully!' });
+    } else {
+      return res.status(400).json({ error: 'Invalid status' });
     }
-
-    // Call the updateLevelAcc function from Model_Rekon
-    const result = await Model_Rekon.updateLevelAcc(id, level_acc);
-
-    if (result.affectedRows === 0) {
-      return res.status(404).json({ error: "Category not found" });
-    }
-
-    res.status(200).json({ message: "Level_acc updated successfully" });
-  } catch (err) {
-    console.error("Error in /admin/detail route:", err);
-    res.status(500).json({ error: "Internal Server Error" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'An error occurred' });
   }
 });
+
 
 module.exports = router;

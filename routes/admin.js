@@ -32,10 +32,33 @@ router.get("/", async function (req, res, next) {
                     'NTT': 0,
                 };
 
-                // Hitung jumlah untuk setiap witel
+                // Inisialisasi objek untuk menghitung approve dan reject
+                const statusCounts = {
+                    'Surabaya Utara': { approve: 0, reject: 0 },
+                    'Surabaya Selatan': { approve: 0, reject: 0 },
+                    'Madura': { approve: 0, reject: 0 },
+                    'Sidoarjo': { approve: 0, reject: 0 },
+                    'Pasuruan': { approve: 0, reject: 0 },
+                    'Jember': { approve: 0, reject: 0 },
+                    'Malang': { approve: 0, reject: 0 },
+                    'Kediri': { approve: 0, reject: 0 },
+                    'Madiun': { approve: 0, reject: 0 },
+                    'Denpasar': { approve: 0, reject: 0 },
+                    'Singaraja': { approve: 0, reject: 0 },
+                    'NTB': { approve: 0, reject: 0 },
+                    'NTT': { approve: 0, reject: 0 },
+                };
+
+                // Hitung jumlah untuk setiap witel dan status
                 rows.forEach((item) => {
                     if (item.witel in witelCounts) {
-                        witelCounts[item.witel]++;
+                        witelCounts[item.witel]++; // Total per witel
+                        // Hitung jumlah approve dan reject berdasarkan level_acc
+                        if (item.level_acc === 'approve') {
+                            statusCounts[item.witel].approve++;
+                        } else if (item.level_acc === 'reject') {
+                            statusCounts[item.witel].reject++;
+                        }
                     }
                 });
 
@@ -45,7 +68,8 @@ router.get("/", async function (req, res, next) {
                     email: data[0].email,
                     username: data[0].username,
                     role: req.session.userRole, // Pass the role to the EJS template
-                    witelCounts: witelCounts // Kirim witelCounts ke view
+                    witelCounts: witelCounts, // Kirim witelCounts ke view
+                    statusCounts: statusCounts // Kirim statusCounts ke view
                 });
             }
         } else {

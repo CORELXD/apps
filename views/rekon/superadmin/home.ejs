@@ -14,11 +14,33 @@
       </div>
     <% } %>
     <h5>Data Rekon</h5>
-    <div class="text-end">
-      <a href="/rekon/superadmin/create" class="btn btn-sm btn-success mb-3"
-        ><i class="fas fa-plus"></i> Tambah</a
-      >
+
+    <!-- Filter Section -->
+    <div class="filter-add-container mb-1">
+      <div class="filter-section">
+        <label for="witelFilter">Filter Witel:</label>
+        <select id="witelFilter" class="form-control" style="width: 150px; display: inline-block;">
+          <option value="">All</option>
+          <option value="Surabaya Utara">Surabaya Utara</option>
+          <option value="Surabaya Selatan">Surabaya Selatan</option>
+          <option value="Madura">Madura</option>
+          <option value="Sidoarjo">Sidoarjo</option>
+          <option value="Pasuruan">Pasuruan</option>
+          <option value="Jember">Jember</option>
+          <option value="Malang">Malang</option>
+          <option value="Kediri">Kediri</option>
+          <option value="Madiun">Madiun</option>
+          <option value="Denpasar">Denpasar</option>
+          <option value="Singaraja">Singaraja</option>
+          <option value="NTB">NTB</option>
+          <option value="NTT">NTT</option>
+        </select>
+      </div>
+        <a href="/rekon/superadmin/create" class="btn btn-sm btn-success mb-1">
+          <i class="fas fa-plus"></i> Tambah
+        </a>
     </div>
+    
     <div class="row">
       <div class="col">
         <div class="table-container">
@@ -32,29 +54,24 @@
                 <th scope="col" class="th-kategori">Kategori</th>
                 <th scope="col" class="th-regional">Regional</th>
                 <th scope="col" class="th-witel">Witel</th>
-                <th scope="col" class="th-jenis-permintaan">
-                  Jenis Permintaan
-                </th>
+                <th scope="col" class="th-jenis-permintaan">Jenis Permintaan</th>
                 <th scope="col" class="th-reason">Reason</th>
                 <th scope="col" class="th-ttr-e2e-awal">TTR E2E Awal</th>
-                <th scope="col" class="th-ttr-after-reduksi">
-                  TTR After Reduksi
-                </th>
+                <th scope="col" class="th-ttr-after-reduksi">TTR After Reduksi</th>
                 <th scope="col" class="th-eviden-regional">Eviden</th>
                 <th scope="col" class="th-catatan-sda">Catatan SDA</th>
                 <th scope="col" class="th-validasi-sda">Validasi SDA</th>
-                <th scope="col" class="th-approved-not-ppq">
-                  Approved Not PPQ
-                </th>
+                <th scope="col" class="th-approved-not-ppq">Approved Not PPQ</th>
                 <th scope="col" class="th-rep-rec">Rep/Rec</th>
                 <th scope="col" class="th-change-to">Change To</th>
                 <th scope="col" class="th-status">Status</th>
+                <th scope="col" class="th-reject-reason">Reject Reason</th>
                 <th scope="col" class="th-aksi">Aksi</th>
               </tr>
             </thead>
             <tbody>
               <% data.forEach((item, index) => { %>
-              <tr>
+              <tr class="rekon-row" data-witel="<%= item.witel %>">
                 <th scope="row"><%= index + 1 %></th>
                 <td><%= item.incident %></td>
                 <td><%= item.customer %></td>
@@ -82,27 +99,21 @@
                 <td><%= item.rep_rec %></td>
                 <td><%= item.change_to %></td>
                 <td><%= item.level_acc %></td>
+                <td><%= item.reject_reason %></td>
                 <td>
-                  <a
-                    href="/rekon/superadmin/edit/<%= item.id_rekon %>"
-                    class="btn btn-sm btn-warning"
-                    ><i class="fas fa-edit"></i>
-                  </a>
-                  <a
-                    href="/rekon/delete/<%= item.id_rekon %>"
-                    class="btn btn-sm btn-danger"
-                    ><i class="fas fa-trash-alt"></i>
-                  </a>
+                  <a href="/rekon/superadmin/edit/<%= item.id_rekon %>" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
+                  <a href="/rekon/delete/<%= item.id_rekon %>" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
                 </td>
               </tr>
               <% }) %>
             </tbody>
           </table>
-          <br>
-          <br>
         </div>
       </div>
     </div>
   </div>
+
   <%- include('../../partials/_foot.ejs') %>
+
+  <script src="../javascripts/filter.js"></script>
 </body>

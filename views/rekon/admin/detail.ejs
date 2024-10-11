@@ -21,103 +21,162 @@
                 <th scope="col" class="th-kategori">Kategori</th>
                 <th scope="col" class="th-regional">Regional</th>
                 <th scope="col" class="th-witel">Witel</th>
-                <th scope="col" class="th-jenis-permintaan">
-                  Jenis Permintaan
-                </th>
+                <th scope="col" class="th-jenis-permintaan">Jenis Permintaan</th>
                 <th scope="col" class="th-reason">Reason</th>
                 <th scope="col" class="th-ttr-e2e-awal">TTR E2E Awal</th>
-                <th scope="col" class="th-ttr-after-reduksi">
-                  TTR After Reduksi
-                </th>
+                <th scope="col" class="th-ttr-after-reduksi">TTR After Reduksi</th>
                 <th scope="col" class="th-eviden-regional">Eviden</th>
                 <th scope="col" class="th-catatan-sda">Catatan SDA</th>
                 <th scope="col" class="th-validasi-sda">Validasi SDA</th>
-                <th scope="col" class="th-approved-not-ppq">
-                  Approved Not PPQ
-                </th>
+                <th scope="col" class="th-approved-not-ppq">Approved Not PPQ</th>
                 <th scope="col" class="th-rep-rec">Rep/Rec</th>
                 <th scope="col" class="th-change-to">Change To</th>
+                <th scope="col" class="th-reject-reason">Reject Reason</th>
                 <th colspan="2" scope="col" class="th-aksi">Aksi</th>
               </tr>
             </thead>
             <tbody>
               <% data.forEach((item, index) => { %>
                 <tr>
-                <th scope="row"><%= index + 1 %></th>
-                <td><%= item.incident %></td>
-                <td><%= item.customer %></td>
-                <td><%= item.layanan %></td>
-                <td><%= item.kategori %></td>
-                <td><%= item.regional %></td>
-                <td><%= item.witel %></td>
-                <td><%= item.jenis_permintaan %></td>
-                <td><%= item.reason %></td>
-                <td><%= item.ttr_e2e_awal %></td>
-                <td><%= item.ttr_after_reduksi %></td>
-                <td>
-                  <% if (item.eviden) { %>
-                    <% let files = item.eviden.split(','); %>
-                    <% files.forEach(function(file) { %>
-                      <img src="/images/upload/<%= encodeURIComponent(file) %>" alt="Eviden Regional" style="width: 200px; height: auto;" />
-                    <% }); %>
-                  <% } else { %>
-                    <p>No image available</p>
-                  <% } %>
-                </td>                                                                                   
-                <td><%= item.catatan_sda %></td>
-                <td><%= item.validasi_sda %></td>
-                <td><%= item.approved_not_ppq %></td>
-                <td><%= item.rep_rec %></td>
-                <td><%= item.change_to %></td>
+                  <th scope="row"><%= index + 1 %></th>
+                  <td><%= item.incident %></td>
+                  <td><%= item.customer %></td>
+                  <td><%= item.layanan %></td>
+                  <td><%= item.kategori %></td>
+                  <td><%= item.regional %></td>
+                  <td><%= item.witel %></td>
+                  <td><%= item.jenis_permintaan %></td>
+                  <td><%= item.reason %></td>
+                  <td><%= item.ttr_e2e_awal %></td>
+                  <td><%= item.ttr_after_reduksi %></td>
                   <td>
-                    <% if (item.level_acc === 'waiting' || !item.level_acc) { %>
-                      <button onclick="updateLevelAcc('<%= item.id_rekon %>', 'approve')" class="btn btn-sm btn-success"><i class="fas fa-check"></i></button>
-                    <% } else if (item.level_acc === 'approve') { %>
-                      <button class="btn btn-sm btn-success" disabled><i class="fas fa-check"></i></button>
+                    <% if (item.eviden) { %>
+                      <% let files = item.eviden.split(','); %>
+                      <% files.forEach(function(file) { %>
+                        <img src="/images/upload/<%= encodeURIComponent(file) %>" alt="Eviden Regional" style="width: 200px; height: auto;" />
+                      <% }); %>
+                    <% } else { %>
+                      <p>No image available</p>
                     <% } %>
                   </td>
+                  <td><%= item.catatan_sda %></td>
+                  <td><%= item.validasi_sda %></td>
+                  <td><%= item.approved_not_ppq %></td>
+                  <td><%= item.rep_rec %></td>
+                  <td><%= item.change_to %></td>
+                  <td><%= item.reject_reason %></td>
+              
+                  
                   <td>
                     <% if (item.level_acc === 'waiting' || !item.level_acc) { %>
-                      <button onclick="updateLevelAcc('<%= item.id_rekon %>', 'reject')" class="btn btn-sm btn-danger"><i class="fas fa-times"></i> </button>
-                    <% } else if (item.level_acc === 'reject') { %>
-                      <button class="btn btn-sm btn-danger" disabled><i class="fas fa-times"></i></button>
+                      <button onclick="updateLevelAcc('<%= item.id_rekon %>', 'approve')" class="btn btn-sm btn-success">
+                        <i class="fas fa-check"></i>
+                      </button>
+                    <% } else if (item.level_acc === 'approve') { %>
+                      <button class="btn btn-sm btn-success" disabled>
+                        <i class="fas fa-check"></i>
+                      </button>
                     <% } %>
-                  </td>                                                     
+                  </td>
+                  
+                  <td>
+                    <% if (item.level_acc === 'waiting' || !item.level_acc) { %>
+                      <button class="btn btn-sm btn-danger" onclick="showRejectModal('<%= item.id_rekon %>')" data-toggle="modal" data-target="#rejectModal">
+                        <i class="fas fa-times"></i>
+                      </button>
+                    <% } else if (item.level_acc === 'reject') { %>
+                      <button class="btn btn-sm btn-danger" disabled>
+                        <i class="fas fa-times"></i>
+                      </button>
+                    <% } %>
+                  </td>
+                  
                 </tr>
-                <% }) %>
-            </tbody>
+              <% }) %>
+            </tbody>                       
           </table>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Modal Reject -->
+  <div class="modal fade" id="rejectModal" tabindex="-1" role="dialog" aria-labelledby="rejectModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="rejectModalLabel">Alasan Penolakan</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="rejectItemId" />
+          <input type="text" id="rejectReasonInput" class="form-control" placeholder="Masukkan alasan penolakan" />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+          <button type="button" class="btn btn-danger" id="confirmRejectBtn">Tolak</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <%- include('../../partials/_foot.ejs') %>
 
   <script>
     async function updateLevelAcc(id, levelAcc) {
-    try {
+      try {
+        let bodyData = { level_acc: levelAcc };
+        
+        // Jika status reject, ambil alasan dari input
+        if (levelAcc === 'reject') {
+          const reasonInput = document.getElementById(`rejectReasonInput`);
+          if (reasonInput && reasonInput.value) {
+            bodyData.reject_reason = reasonInput.value; // Tambahkan alasan ke data yang dikirim
+          } else {
+            alert("Please provide a reason for rejection.");
+            return; // Keluar jika alasan tidak diisi
+          }
+        }
+
         const response = await fetch(`/rekon/admin/detail/${id}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ level_acc: levelAcc })
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(bodyData)
         });
 
         const result = await response.json();
         if (response.ok) {
-            alert(result.message);
-
-            // Menggunakan `window.location.reload()` untuk memuat ulang halaman dan menampilkan item terbaru
-            window.location.reload(); // Ini untuk memastikan kondisi yang terbaru muncul setelah update
+          alert(result.message);
+          window.location.reload();
         } else {
-            alert(result.error);
+          alert(result.error);
         }
-    } catch (err) {
+      } catch (err) {
         console.error("Error updating level_acc:", err);
         alert("Failed to update level_acc. Please try again.");
+      }
     }
-}
 
-    </script>
+    function showRejectModal(id) {
+      document.getElementById('rejectItemId').value = id;
+      document.getElementById('rejectReasonInput').value = ''; // Reset input alasan
+    }
+
+    document.getElementById('confirmRejectBtn').addEventListener('click', async function() {
+      const id = document.getElementById('rejectItemId').value;
+      const reason = document.getElementById('rejectReasonInput').value;
+
+      if (!reason) {
+        alert("Please provide a reason for rejection.");
+        return;
+      }
+
+      await updateLevelAcc(id, 'reject');
+      $('#rejectModal').modal('hide'); // Menutup modal setelah berhasil
+    });
+  </script>
 </body>

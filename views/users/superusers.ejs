@@ -13,25 +13,41 @@
                     <h1>Hello : <%= username %></h1>
                 </div>
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Witel</th>
-                        <th>Jumlah</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <% Object.keys(witelCounts).forEach((witel, index) => { %>
+
+            <div class="table-responsive">
+                <table class="table table-bordered table-striped table-hover">
+                    <thead class="thead-dark">
                         <tr>
-                            <td><%= index + 1 %></td>
-                            <td><%= witel %></td>
-                            <td><%= witelCounts[witel] %></td>
+                            <th scope="col" style="width: 75px; word-wrap: break-word; white-space: normal;">Status</th>
+                            <% Object.keys(witelCounts).forEach((witel) => { %>
+                                <th scope="col" style="width: 100px; word-wrap: break-word; white-space: normal;"><%= witel %></th>
+                            <% }); %>
                         </tr>
-                    <% }); %>
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Jumlah</strong></td>
+                            <% Object.keys(witelCounts).forEach((witel) => { %>
+                                <td><%= witelCounts[witel] %></td>
+                            <% }); %>
+                        </tr>
+                        <tr>
+                            <td style="color: green;"><strong>Approve</strong></td>
+                            <% Object.keys(witelCounts).forEach((witel) => { %>
+                                <td style="color: green;"><%= statusCounts[witel].approve %></td>
+                            <% }); %>
+                        </tr>
+                        <tr>
+                            <td style="color: red;"><strong>Reject</strong></td>
+                            <% Object.keys(witelCounts).forEach((witel) => { %>
+                                <td style="color: red;"><%= statusCounts[witel].reject %></td>
+                            <% }); %>
+                        </tr>    
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
     <%- include('../partials/_foot.ejs') %>
 </body>
