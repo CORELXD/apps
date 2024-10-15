@@ -10,7 +10,7 @@
             </div>
             <div class="row">
                 <div class="col">
-                    <h1>Hello : <%= username %></h1>
+                    <p>Data terakhir diperbarui: <%= lastUpdated ? new Date(lastUpdated).toLocaleString() : 'Belum diperbarui' %></p>
                 </div>
             </div>
 
@@ -18,29 +18,25 @@
                 <table class="table table-bordered table-striped table-hover">
                     <thead class="thead-dark">
                         <tr>
-                            <th scope="col" style="width: 75px; word-wrap: break-word; white-space: normal;">Status</th>
+                            <th scope="col" style="width: 100px; word-wrap: break-word; white-space: normal;">Layanan</th>
                             <% Object.keys(witelCounts).forEach((witel) => { %>
                                 <th scope="col" style="width: 100px; word-wrap: break-word; white-space: normal;"><%= witel %></th>
                             <% }); %>
                         </tr>
                     </thead>
                     <tbody>
+                        <% ['ASTINET', 'VPNIP', 'WIFI', 'INTERNET', 'VOICE', 'IPTV'].forEach((layanan) => { %>
+                        <tr>
+                            <td><strong><%= layanan %></strong></td>
+                            <% Object.keys(witelCounts).forEach((witel) => { %>
+                                <td><%= layananCounts[witel][layanan] || 0 %></td> <!-- Tampilkan 0 jika tidak ada data -->
+                            <% }); %>
+                        </tr>
+                        <% }); %>
                         <tr>
                             <td><strong>Jumlah</strong></td>
                             <% Object.keys(witelCounts).forEach((witel) => { %>
-                                <td><%= witelCounts[witel] %></td>
-                            <% }); %>
-                        </tr>
-                        <tr>
-                            <td style="color: green;"><strong>Approve</strong></td>
-                            <% Object.keys(witelCounts).forEach((witel) => { %>
-                                <td style="color: green;"><%= statusCounts[witel].approve %></td>
-                            <% }); %>
-                        </tr>
-                        <tr>
-                            <td style="color: red;"><strong>Reject</strong></td>
-                            <% Object.keys(witelCounts).forEach((witel) => { %>
-                                <td style="color: red;"><%= statusCounts[witel].reject %></td>
+                                <td><%= Object.values(layananCounts[witel]).reduce((acc, count) => acc + count, 0) || 0 %></td> <!-- Jumlah total untuk setiap witel -->
                             <% }); %>
                         </tr>    
                     </tbody>

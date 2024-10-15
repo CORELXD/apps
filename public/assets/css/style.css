@@ -100,7 +100,7 @@
   .th-customer {
     background-color: red !important;/* Mengubah latar belakang menjadi merah */
     color: white !important; /* Mengubah teks menjadi putih */
-    width: 100px;
+    width: 200px;
   }
 
   .th-layanan {
