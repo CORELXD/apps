@@ -610,6 +610,58 @@ router.post('/superusers/update/:id', (req, res, next) => {
   }
 });
 
+// Mengupdate level_acc pada rekon berdasarkan ID untuk superadmin
+router.post('/superadmin/detail/:id', async (req, res) => {
+  const { level_acc, reject_reason } = req.body;
+  const id = req.params.id;
+
+  try {
+    // Validasi level_acc
+    if (level_acc === 'approve' || level_acc === 'reject') {
+      // Lakukan update di database
+      await Model_Rekon.updateLevelAcc(id, level_acc, reject_reason);
+      return res.json({ message: 'Status updated successfully by superadmin!' });
+    } else {
+      return res.status(400).json({ error: 'Invalid status' });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: 'An error occurred' });
+  }
+});
+
+
+// Menampilkan kategori berdasarkan ID
+router.get("/superadmin/detail/:id", async function (req, res, next) {
+  const { id } = req.params;
+  const { userId, userRole, userEmail } = req.session;
+
+  try {
+    // Ambil data rekon dan data user secara bersamaan
+    const [rows, rows2] = await Promise.all([
+      Model_Rekon.getId(id),
+      Model_Users.getId(userId),
+    ]);
+
+    // Pastikan data rekon ditemukan
+    if (rows.length === 0) {
+      req.flash("error", "Data tidak ditemukan.");
+      return res.redirect("/admin");
+    }
+
+    // Render halaman detail
+    res.render("rekon/superadmin/detail", {
+      data: rows,
+      role: userRole,
+      username: rows2[0].username,
+      email: userEmail,
+    });
+  } catch (err) {
+    console.error("Database query error:", err);
+    req.flash("error", "Terjadi kesalahan pada pengambilan data.");
+    res.redirect("/superadmin");
+  }
+});
 
 // Menampilkan kategori berdasarkan ID
 router.get("/admin/detail/:id", async function (req, res, next) {

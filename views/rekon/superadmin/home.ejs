@@ -101,9 +101,12 @@
                 <td><%= item.level_acc %></td>
                 <td><%= item.reject_reason %></td>
                 <td>
+                  <a href="/rekon/superadmin/detail/<%= item.id_rekon %>" class="btn btn-sm btn-secondary">
+                    <i class="fas fa-eye"></i> 
+                  </a>
                   <a href="/rekon/superadmin/edit/<%= item.id_rekon %>" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>
-                  <a href="/rekon/delete/<%= item.id_rekon %>" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
-                </td>
+                    <a href="/rekon/delete/<%= item.id_rekon %>" class="btn btn-sm btn-danger"><i class="fas fa-trash-alt"></i></a>
+                  </td>
               </tr>
               <% }) %>
             </tbody>
